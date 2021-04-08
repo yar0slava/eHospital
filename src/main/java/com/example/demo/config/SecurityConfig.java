@@ -58,9 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+//                .antMatchers("/login").permitAll()
+//                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/admin/**").hasAuthority("ADMIN")
         .antMatchers("/**").permitAll();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
