@@ -13,12 +13,13 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
-@RequestMapping("/login")
+@Controller
 public class LoginController {
 
     private final AuthenticationManager authenticationManager;
@@ -33,6 +34,19 @@ public class LoginController {
         this.userService = userService;
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String getSignIn(Model model) {
+//        model.addAttribute("user", new User());
+        model.addAttribute("error", null);
+        return "login";
+    }
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String getSignUp() {
+//        model.addAttribute("user", new User());
+        return "signup";
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) throws  Exception{
@@ -42,6 +56,7 @@ public class LoginController {
         return new LoginResponseDto(token);
     }
 
+    @ResponseBody
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto signUp(@RequestBody @Valid AddUserDto userDto) {
