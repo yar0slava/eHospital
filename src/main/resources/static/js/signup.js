@@ -15,8 +15,8 @@ function sendRegistration() {
         birthday: $("#birthday").val(),
         phone: $("#phone").val(),
         hospitalCode: hospital,
-        authority:[{name: $("#role").val()}],
-        qualifications: [$("#qualification").val()]
+        authority:[$("#role").val()],
+        specializations: $("#specializations").val()
     }
 
     console.log(user);
@@ -102,11 +102,11 @@ $(document).ready(function(){
 
     $.ajax({
         type: "GET",
-        url: "/api/users/qualifications",
+        url: "/api/users/specializations",
         dataType: "json",
         success: function (array) {
             array.forEach(function(object){
-                $("#qualification").append('<option value="' + object.name + '">' + object.name + '</option>');
+                $("#specializations").append('<option value="' + object.name + '">' + object.name + '</option>');
             })
         }
     })
