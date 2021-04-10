@@ -1,16 +1,12 @@
 package com.example.demo.core.application.dto;
 
-import com.example.demo.core.application.validator.UserAgeConstraint;
 import com.example.demo.core.database.entity.Authority;
 import com.example.demo.core.database.entity.Gender;
-import com.example.demo.core.domain.model.BankAccount;
-import com.example.demo.core.domain.model.Hospital;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -45,10 +41,6 @@ public class AddUserDto {
 
     private String hospitalCode;
 
-//    @NotNull
-//    private Set<Authority> authority;
-
-//    @NotNull
-//    private Hospital hospital;
-
+    @NotNull
+    private Set<Authority> authority;
 }

@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity,Long> {
 
-    Optional<AppointmentEntity> findByPatientId();
+    Optional<AppointmentEntity> findByPatientId(long patientId);
 
-    Optional<AppointmentEntity> findByDoctorId();
+    Optional<AppointmentEntity> findByDoctorId(long doctorId);
 
-    Optional<AppointmentEntity> findByPatientIdIsNullAndDoctorIdIs();
+    Optional<AppointmentEntity> findByPatientIdIsNullAndDoctorIdIs(long doctorId);
 }

@@ -15,6 +15,7 @@ function sendRegistration() {
         birthday: $("#birthday").val(),
         phone: $("#phone").val(),
         hospitalCode: hospital,
+        authority:[{name: $("#role").val()}]
         // qualifications: []
     }
 

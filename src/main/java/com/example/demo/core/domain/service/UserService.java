@@ -3,9 +3,11 @@ package com.example.demo.core.domain.service;
 import com.example.demo.core.application.dto.AddUserDto;
 import com.example.demo.core.application.dto.PageDto;
 import com.example.demo.core.application.dto.UserDto;
+import com.example.demo.core.database.entity.Authority;
 import com.example.demo.core.database.entity.HospitalEntity;
 import com.example.demo.core.database.entity.Qualification;
 import com.example.demo.core.database.entity.UserEntity;
+import com.example.demo.core.database.repository.AuthorityRepository;
 import com.example.demo.core.database.repository.HospitalRepository;
 import com.example.demo.core.database.repository.QualificationRepository;
 import com.example.demo.core.database.repository.UserRepository;
@@ -21,8 +23,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -32,16 +36,19 @@ public class UserService implements UserDetailsService {
     private final HospitalRepository hospitalRepository;
     private final UserRepository userRepository;
     private final QualificationRepository qualificationRepository;
+    private final AuthorityRepository authorityRepository;
     private final UserMapper userMapper;
     private final AddUserMapper addUserMapper;
     private final UpdateUserMapper updateUserMapper;
 
-    public UserService(HospitalRepository hospitalRepository, UserRepository userRepository, QualificationRepository qualificationRepository,
+    public UserService(HospitalRepository hospitalRepository, UserRepository userRepository,
+                       QualificationRepository qualificationRepository, AuthorityRepository authorityRepository,
                        UserMapper userMapper, AddUserMapper addUserMapper, UpdateUserMapper updateUserMapper){
         this.hospitalRepository = hospitalRepository;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.qualificationRepository = qualificationRepository;
+        this.authorityRepository = authorityRepository;
         this.addUserMapper = addUserMapper;
         this.updateUserMapper = updateUserMapper;
     }
@@ -87,11 +94,14 @@ public class UserService implements UserDetailsService {
 
     public UserDto addUser(AddUserDto user){
 
+        Authority authority = authorityRepository.findByNameEquals(user.getAuthority().iterator().next().getAuthority()).get();
+        UserEntity userEntity = addUserMapper.toEntity(user);
+        userEntity.setAuthority(Collections.singleton(authority));
+
         if(user.getHospitalCode() != ""){
             Optional<HospitalEntity> hospitalEntity = hospitalRepository.findByCodeHospital(user.getHospitalCode());
             if(hospitalEntity.isPresent()){
 
-                UserEntity userEntity = addUserMapper.toEntity(user);
                 userEntity.setHospital(hospitalEntity.get());
 
                 UserEntity addUser = userRepository.save(userEntity);
@@ -99,7 +109,7 @@ public class UserService implements UserDetailsService {
             }
         }
 
-            UserEntity addUser = userRepository.save(addUserMapper.toEntity(user));
+            UserEntity addUser = userRepository.save(userEntity);
             return userMapper.toDto(addUser);
 
     }
