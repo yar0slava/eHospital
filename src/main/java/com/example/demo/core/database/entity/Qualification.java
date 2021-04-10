@@ -3,7 +3,6 @@ package com.example.demo.core.database.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
@@ -11,18 +10,13 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "authority")
-public class Authority implements GrantedAuthority {
+@Table(name = "qualification")
+public class Qualification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", unique = true)
+    @Column(name = "name")
     private String name;
-
-    @Override
-    public String getAuthority() {
-        return name;
-    }
 }

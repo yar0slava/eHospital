@@ -30,6 +30,6 @@ public class HospitalEntity {
     @Column(name = "region")
     private String region;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hospitalCode")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hospital")
     private List<UserEntity> users;
 }

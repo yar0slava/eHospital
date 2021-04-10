@@ -2,6 +2,7 @@ package com.example.demo.core.application.controller.api;
 
 import com.example.demo.core.application.dto.PageDto;
 import com.example.demo.core.application.dto.UserDto;
+import com.example.demo.core.database.entity.Qualification;
 import com.example.demo.core.domain.service.UserService;
 import javassist.NotFoundException;
 import javassist.tools.web.BadHttpRequest;
@@ -46,5 +47,11 @@ public class UserController {
     public List<UserDto> getUsersGrouped(@RequestParam(value = "field", required = false, defaultValue = "name") String field,
                                          @RequestParam(value = "order", required = false, defaultValue = "asc") String order) throws BadHttpRequest {
         return userService.getUsersGrouped(field, order);
+    }
+
+    @GetMapping("/qualifications")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Qualification> getUsersGrouped(){
+        return userService.getQualifications();
     }
 }

@@ -1,13 +1,11 @@
 package com.example.demo.core.database.entity;
 
-import com.example.demo.core.domain.model.Hospital;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -47,10 +45,15 @@ public class UserEntity {
     private Set<Authority> authority;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hospital_id", insertable = false, updatable = false)
-    private HospitalEntity hospitalCode;
+    @JoinColumn(name = "hospital_id")
+    private HospitalEntity hospital;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "doctor_to_qualifications",
+            joinColumns = @JoinColumn(name = "doctor_id"),
+            inverseJoinColumns = @JoinColumn(name = "qualification_id")
+    )
+    private Set<Qualification> qualification;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<BankAccountEntity> bankAccount;
 }

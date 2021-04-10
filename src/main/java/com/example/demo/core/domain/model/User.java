@@ -2,6 +2,7 @@ package com.example.demo.core.domain.model;
 
 import com.example.demo.core.database.entity.Authority;
 import com.example.demo.core.database.entity.Gender;
+import com.example.demo.core.database.entity.Qualification;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +23,7 @@ public class User implements UserDetails {
     private Integer age;
     private String email;
     private Hospital hospital;
-    private List<BankAccount> bankAccount;
+    private List<Qualification> qualifications;
     private String password;
     private Set<Authority> authority;
 
