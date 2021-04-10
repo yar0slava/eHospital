@@ -3,7 +3,9 @@ package com.example.demo.core.domain.service;
 import com.example.demo.core.application.dto.AddUserDto;
 import com.example.demo.core.application.dto.PageDto;
 import com.example.demo.core.application.dto.UserDto;
+import com.example.demo.core.database.entity.HospitalEntity;
 import com.example.demo.core.database.entity.UserEntity;
+import com.example.demo.core.database.repository.HospitalRepository;
 import com.example.demo.core.database.repository.UserRepository;
 import com.example.demo.core.mapper.AddUserMapper;
 import com.example.demo.core.mapper.UpdateUserMapper;
@@ -25,12 +27,14 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserService implements UserDetailsService {
 
+    private final HospitalRepository hospitalRepository;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final AddUserMapper addUserMapper;
     private final UpdateUserMapper updateUserMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, AddUserMapper addUserMapper, UpdateUserMapper updateUserMapper){
+    public UserService(HospitalRepository hospitalRepository, UserRepository userRepository, UserMapper userMapper, AddUserMapper addUserMapper, UpdateUserMapper updateUserMapper){
+        this.hospitalRepository = hospitalRepository;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.addUserMapper = addUserMapper;
@@ -77,8 +81,21 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto addUser(AddUserDto user){
-        UserEntity addUser = userRepository.save(addUserMapper.toEntity(user));
-        return userMapper.toDto(addUser);
+
+        if(user.getHospitalCode() != ""){
+            Optional<HospitalEntity> hospitalEntity = hospitalRepository.findByCodeHospital(user.getHospitalCode());
+            if(hospitalEntity.isPresent()){
+                hospitalEntity.get().getUsers().add(addUserMapper.toEntity(user));
+
+              //  hospitalRepository.save(hospitalEntity.get());
+                UserEntity addUser = userRepository.save(addUserMapper.toEntity(user));
+                return userMapper.toDto(addUser);
+            }
+        }
+
+            UserEntity addUser = userRepository.save(addUserMapper.toEntity(user));
+            return userMapper.toDto(addUser);
+
     }
 
     public UserDto updateUser(UserDto user){

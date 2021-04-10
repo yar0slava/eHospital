@@ -19,44 +19,161 @@
         <img src="/img/Signup.gif" >
     </div>
     <div class="login-content">
-        <form id="registerForm" th:action="@{/sign-up}"  method="post">
+        <form id="regForm" >
+
             <h2 class="title">SIGN UP</h2>
             <div th:each="err : ${error}" id="error-message" class="alert alert-danger" role="alert"
                  th:text="${err}" style="margin: 2%">
             </div>
-            <div class="input-div one">
-                <div class="i">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="div">
-                    <h5>Username</h5>
-                    <input type="text" required class="input" name="username" id="username">
-                </div>
+            <div class="tab">
+                <p>
+                    <select class="form-select" id="role">
+                        <option selected value="patient">Patient</option>
+                        <option value="doctor">Doctor</option>
+                    </select>
+                </p>
             </div>
-            <div class="input-div pass">
-                <div class="i">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <div class="div">
-                    <h5>Password</h5>
-                    <input type="password" required class="input" name="password" id="password">
-                </div>
+
+            <div class="tab">
+                <p><input type="text" required class="input" name="passport" id="passport"
+                          placeholder="Passport numbr..." oninput="this.className = ''"></p>
+                <p> <input type="text" required class="input" name="firstName" id="firstName"
+                           placeholder="First name..." oninput="this.className = ''"></p>
+                <p> <input type="text" required class="input" name="lastName" id="lastName"
+                           placeholder="Last name..." oninput="this.className = ''"></p>
             </div>
-            <div class="input-div pass">
-                <div class="i">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <div class="div">
-                    <h5>Email</h5>
-                    <input type="email" required class="input" name="email" id="email">
+
+            <div class="tab">
+                <p><input type="text" required class="input" name="phone" id="phone" placeholder="Phone..." oninput="this.className = ''"></p>
+                <p><input type="date" required class="input" name="birthday" id="birthday" placeholder="Birthday..." oninput="this.className = ''"></p>
+               <p> <select class="form-select" id="gender">
+                    <option selected value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+               </select></p>
+            </div>
+
+            <div class="tab">
+                <p><input type="email" required class="input" name="email" id="email"
+                          placeholder="Mail..." oninput="this.className = ''"></p>
+                <p><input type="password" required class="input" name="password" id="password"
+                          placeholder="Password..." oninput="this.className = ''"></p>
+                <p id="hospital"><input type="text" value="Hospital code" class="input" name="hospitalCode" id="hospitalCode"
+                          placeholder="Hospital code..." oninput="this.className = ''"></p>
+
+            </div>
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
                 </div>
             </div>
 
-            <input type="submit" class="btn btn-dark" value="Sign up">
-            <p class="text-center"><a th:href="@{/sign-in}">Already have an account? Sign in</a></p>
+            <!-- Circles which indicates the steps of the form: -->
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+
+<!--            <div class="input-div one">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-lock"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <select class="form-select">-->
+<!--                        <option selected>Select your role</option>-->
+<!--                        <option value="patient">Patient</option>-->
+<!--                        <option value="doctor">Doctor</option>-->
+<!--                    </select>-->
+<!--                    &lt;!&ndash;                    <input type="text" required class="input" name="lastName" id="lastName">&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="input-div one">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-user"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <h5>Passport number</h5>-->
+<!--                    <input type="text" required class="input" name="passport" id="passport">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="input-div pass">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-user"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <h5>Mail</h5>-->
+<!--                    <input type="email" required class="input" name="email" id="email">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="input-div pass">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-lock"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <h5>Password</h5>-->
+<!--                    <input type="password" required class="input" name="password" id="password">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="input-div pass">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-lock"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <h5>Name</h5>-->
+<!--                    <input type="text" required class="input" name="firstName" id="firstName">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="input-div pass">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-lock"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <h5>Surname</h5>-->
+<!--                    <input type="text" required class="input" name="lastName" id="lastName">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="input-div pass">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-lock"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <select class="form-select">-->
+<!--                        <option selected>Select your gender</option>-->
+<!--                        <option value="MALE">Male</option>-->
+<!--                        <option value="FEMALE">Female</option>-->
+<!--                    </select>-->
+<!--&lt;!&ndash;                    <input type="text" required class="input" name="lastName" id="lastName">&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="input-div pass">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-lock"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <h5>Date of birth</h5>-->
+<!--                    <input type="date" required class="input" name="birthday" id="birthday">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div hidden class="input-div pass">-->
+<!--                <div class="i">-->
+<!--                    <i class="fas fa-lock"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                    <h5>Hospital code</h5>-->
+<!--                    <input type="text" required class="input" name="hospitalCode" id="hospitalCode">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <input type="submit" class="btn btn-dark" value="Sign up">-->
+<!--            <p class="text-center"><a th:href="@{/login}">Already have an account? Sign in</a></p>-->
         </form>
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/js/signup.js"></script>
 </body>
 </html>

@@ -50,16 +50,20 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) throws  Exception{
+        System.out.println(loginRequestDto.getEmail());
+
         authenticate(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequestDto.getEmail());
         final String token = jwtUtil.generateToken(userDetails);
+        System.out.println("TOKN" + token);
         return new LoginResponseDto(token);
     }
 
     @ResponseBody
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto signUp(@RequestBody @Valid AddUserDto userDto) {
+    public UserDto signUp(@RequestBody AddUserDto userDto) {
+        System.out.println(userDto.toString());
         return userService.addUser(userDto);
     }
 

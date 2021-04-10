@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -17,18 +18,7 @@ import java.util.Set;
 public class AddUserDto {
 
     @NotNull
-    private Gender gender;
-
-    @NotBlank
-    private String firstName;
-
-    @NotBlank
-    private String lastName;
-
-    @Min(18)
-    @Max(100)
-    @UserAgeConstraint
-    private Integer age;
+    private String passport;
 
     @Email
     @Pattern(regexp = "\\w*@gmail.com\\b")
@@ -38,12 +28,27 @@ public class AddUserDto {
     @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")
     private String password;
 
-    @NotNull
-    private Set<Authority> authority;
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
 
     @NotNull
-    private Hospital hospital;
+    private Gender gender;
 
     @NotNull
-    private List<BankAccount> bankAccount;
+    private Date birthday;
+
+    @NotNull
+    private String phone;
+
+    private String hospitalCode;
+
+//    @NotNull
+//    private Set<Authority> authority;
+
+//    @NotNull
+//    private Hospital hospital;
+
 }
