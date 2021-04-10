@@ -55,5 +55,4 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "qualification_id")
     )
     private Set<Qualification> qualification;
-
 }
