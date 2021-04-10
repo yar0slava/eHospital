@@ -1,13 +1,11 @@
 package com.example.demo.core.database.entity;
 
-import com.example.demo.core.domain.model.Hospital;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Getter
