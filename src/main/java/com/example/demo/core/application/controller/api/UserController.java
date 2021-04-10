@@ -49,7 +49,7 @@ public class UserController {
         return userService.getUsersGrouped(field, order);
     }
 
-    @GetMapping("/qualifications")
+    @GetMapping("/specializations")
     @ResponseStatus(HttpStatus.OK)
     public List<Specialization> getUsersGrouped(){
         return userService.getQualifications();
