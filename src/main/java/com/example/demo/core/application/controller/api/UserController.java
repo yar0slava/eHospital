@@ -2,7 +2,7 @@ package com.example.demo.core.application.controller.api;
 
 import com.example.demo.core.application.dto.PageDto;
 import com.example.demo.core.application.dto.UserDto;
-import com.example.demo.core.database.entity.Qualification;
+import com.example.demo.core.database.entity.Specialization;
 import com.example.demo.core.domain.service.UserService;
 import javassist.NotFoundException;
 import javassist.tools.web.BadHttpRequest;
@@ -51,7 +51,7 @@ public class UserController {
 
     @GetMapping("/qualifications")
     @ResponseStatus(HttpStatus.OK)
-    public List<Qualification> getUsersGrouped(){
-        return userService.getQualifications();
+    public List<Specialization> getUsersGrouped(){
+        return userService.getSpezialization();
     }
 }

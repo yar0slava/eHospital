@@ -50,9 +50,9 @@ public class UserEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "doctor_to_qualifications",
+            name = "doctor_to_specializations",
             joinColumns = @JoinColumn(name = "doctor_id"),
-            inverseJoinColumns = @JoinColumn(name = "qualification_id")
+            inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
-    private Set<Qualification> qualification;
+    private Set<Specialization> specialization;
 }

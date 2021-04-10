@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "qualification")
-public class Qualification {
+@Table(name = "specialization")
+public class Specialization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

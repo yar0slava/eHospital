@@ -15,8 +15,8 @@ function sendRegistration() {
         birthday: $("#birthday").val(),
         phone: $("#phone").val(),
         hospitalCode: hospital,
-        authority:[{name: $("#role").val()}]
-        // qualifications: []
+        authority:[{name: $("#role").val()}],
+        qualifications: [$("#qualification").val()]
     }
 
     console.log(user);
@@ -30,7 +30,7 @@ function sendRegistration() {
         },
         success: function (response) {
             console.log(response);
-            window.location = '/login';
+            // window.location = '/login';
         },
         error: function (response) {
             alert(response.responseText);
@@ -100,16 +100,14 @@ function fixStepIndicator(n) {
 
 $(document).ready(function(){
 
-
     $.ajax({
         type: "GET",
         url: "/api/users/qualifications",
         dataType: "json",
         success: function (array) {
             array.forEach(function(object){
-                $("#qualification").append('<option value="' + object.id + '">' + object.name + '</option>');
+                $("#qualification").append('<option value="' + object.name + '">' + object.name + '</option>');
             })
-            console.log(shop.categories);
         }
     })
 

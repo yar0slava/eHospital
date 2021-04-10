@@ -5,11 +5,11 @@ import com.example.demo.core.application.dto.PageDto;
 import com.example.demo.core.application.dto.UserDto;
 import com.example.demo.core.database.entity.Authority;
 import com.example.demo.core.database.entity.HospitalEntity;
-import com.example.demo.core.database.entity.Qualification;
+import com.example.demo.core.database.entity.Specialization;
 import com.example.demo.core.database.entity.UserEntity;
 import com.example.demo.core.database.repository.AuthorityRepository;
 import com.example.demo.core.database.repository.HospitalRepository;
-import com.example.demo.core.database.repository.QualificationRepository;
+import com.example.demo.core.database.repository.SpecializationRepository;
 import com.example.demo.core.database.repository.UserRepository;
 import com.example.demo.core.mapper.AddUserMapper;
 import com.example.demo.core.mapper.UpdateUserMapper;
@@ -23,10 +23,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -35,19 +32,19 @@ public class UserService implements UserDetailsService {
 
     private final HospitalRepository hospitalRepository;
     private final UserRepository userRepository;
-    private final QualificationRepository qualificationRepository;
+    private final SpecializationRepository specializationRepository;
     private final AuthorityRepository authorityRepository;
     private final UserMapper userMapper;
     private final AddUserMapper addUserMapper;
     private final UpdateUserMapper updateUserMapper;
 
     public UserService(HospitalRepository hospitalRepository, UserRepository userRepository,
-                       QualificationRepository qualificationRepository, AuthorityRepository authorityRepository,
+                       SpecializationRepository specializationRepository, AuthorityRepository authorityRepository,
                        UserMapper userMapper, AddUserMapper addUserMapper, UpdateUserMapper updateUserMapper){
         this.hospitalRepository = hospitalRepository;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
-        this.qualificationRepository = qualificationRepository;
+        this.specializationRepository = specializationRepository;
         this.authorityRepository = authorityRepository;
         this.addUserMapper = addUserMapper;
         this.updateUserMapper = updateUserMapper;
@@ -94,9 +91,24 @@ public class UserService implements UserDetailsService {
 
     public UserDto addUser(AddUserDto user){
 
-        Authority authority = authorityRepository.findByNameEquals(user.getAuthority().iterator().next().getAuthority()).get();
         UserEntity userEntity = addUserMapper.toEntity(user);
-        userEntity.setAuthority(Collections.singleton(authority));
+
+        //setting authorities
+        Set<Authority> authorities = new TreeSet<>();
+
+        for (String s: user.getAuthority()) {
+            authorities.add(authorityRepository.findByNameEquals(s).get());
+        }
+        userEntity.setAuthority(authorities);
+
+        //setting specializations
+        Set<Specialization> specializations = new TreeSet<>();
+
+        for (String s: user.getSpecializations()) {
+            authorities.add(authorityRepository.findByNameEquals(s).get());
+        }
+
+        userEntity.setSpecialization(specializations);
 
         if(user.getHospitalCode() != ""){
             Optional<HospitalEntity> hospitalEntity = hospitalRepository.findByCodeHospital(user.getHospitalCode());
@@ -114,8 +126,8 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<Qualification> getQualifications(){
-        return qualificationRepository.findAll();
+    public List<Specialization> getSpezialization(){
+        return specializationRepository.findAll();
     }
 
     public UserDto updateUser(UserDto user){
