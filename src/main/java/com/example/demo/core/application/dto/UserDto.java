@@ -25,10 +25,6 @@ public class UserDto {
 
     private String lastName;
 
-    @Min(18)
-    @Max(100)
-    @UserAgeConstraint
-    private Integer age;
 
     @Email
     @Pattern(regexp = "@gmail.com$")
@@ -40,6 +36,4 @@ public class UserDto {
     @NotNull
     private Hospital hospital;
 
-    @NotNull
-    private List<BankAccount> bankAccount;
 }
