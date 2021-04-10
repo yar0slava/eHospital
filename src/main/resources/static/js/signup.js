@@ -14,7 +14,8 @@ function sendRegistration() {
         gender: $("#gender").val(),
         birthday: $("#birthday").val(),
         phone: $("#phone").val(),
-        hospitalCode: hospital
+        hospitalCode: hospital,
+        // qualifications: []
     }
 
     console.log(user);
@@ -95,3 +96,20 @@ function fixStepIndicator(n) {
     }
     x[n].className += " active";
 }
+
+$(document).ready(function(){
+
+
+    $.ajax({
+        type: "GET",
+        url: "/api/users/qualifications",
+        dataType: "json",
+        success: function (array) {
+            array.forEach(function(object){
+                $("#qualification").append('<option value="' + object.id + '">' + object.name + '</option>');
+            })
+            console.log(shop.categories);
+        }
+    })
+
+})

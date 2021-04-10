@@ -4,8 +4,10 @@ import com.example.demo.core.application.dto.AddUserDto;
 import com.example.demo.core.application.dto.PageDto;
 import com.example.demo.core.application.dto.UserDto;
 import com.example.demo.core.database.entity.HospitalEntity;
+import com.example.demo.core.database.entity.Qualification;
 import com.example.demo.core.database.entity.UserEntity;
 import com.example.demo.core.database.repository.HospitalRepository;
+import com.example.demo.core.database.repository.QualificationRepository;
 import com.example.demo.core.database.repository.UserRepository;
 import com.example.demo.core.mapper.AddUserMapper;
 import com.example.demo.core.mapper.UpdateUserMapper;
@@ -29,14 +31,17 @@ public class UserService implements UserDetailsService {
 
     private final HospitalRepository hospitalRepository;
     private final UserRepository userRepository;
+    private final QualificationRepository qualificationRepository;
     private final UserMapper userMapper;
     private final AddUserMapper addUserMapper;
     private final UpdateUserMapper updateUserMapper;
 
-    public UserService(HospitalRepository hospitalRepository, UserRepository userRepository, UserMapper userMapper, AddUserMapper addUserMapper, UpdateUserMapper updateUserMapper){
+    public UserService(HospitalRepository hospitalRepository, UserRepository userRepository, QualificationRepository qualificationRepository,
+                       UserMapper userMapper, AddUserMapper addUserMapper, UpdateUserMapper updateUserMapper){
         this.hospitalRepository = hospitalRepository;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.qualificationRepository = qualificationRepository;
         this.addUserMapper = addUserMapper;
         this.updateUserMapper = updateUserMapper;
     }
@@ -85,10 +90,11 @@ public class UserService implements UserDetailsService {
         if(user.getHospitalCode() != ""){
             Optional<HospitalEntity> hospitalEntity = hospitalRepository.findByCodeHospital(user.getHospitalCode());
             if(hospitalEntity.isPresent()){
-                hospitalEntity.get().getUsers().add(addUserMapper.toEntity(user));
 
-              //  hospitalRepository.save(hospitalEntity.get());
-                UserEntity addUser = userRepository.save(addUserMapper.toEntity(user));
+                UserEntity userEntity = addUserMapper.toEntity(user);
+                userEntity.setHospital(hospitalEntity.get());
+
+                UserEntity addUser = userRepository.save(userEntity);
                 return userMapper.toDto(addUser);
             }
         }
@@ -96,6 +102,10 @@ public class UserService implements UserDetailsService {
             UserEntity addUser = userRepository.save(addUserMapper.toEntity(user));
             return userMapper.toDto(addUser);
 
+    }
+
+    public List<Qualification> getQualifications(){
+        return qualificationRepository.findAll();
     }
 
     public UserDto updateUser(UserDto user){
