@@ -2,6 +2,7 @@ package com.example.demo.core.application.dto;
 
 import com.example.demo.core.database.entity.Authority;
 import com.example.demo.core.database.entity.Gender;
+import com.example.demo.core.database.entity.Specialization;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,5 +43,8 @@ public class AddUserDto {
     private String hospitalCode;
 
     @NotNull
-    private Set<Authority> authority;
+    private Set<String> authority;
+
+    @NotNull
+    private Set<String> specializations;
 }
