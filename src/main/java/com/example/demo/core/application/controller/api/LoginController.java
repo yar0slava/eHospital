@@ -51,7 +51,6 @@ public class LoginController {
     @ResponseStatus(HttpStatus.OK)
     public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) throws  Exception{
         System.out.println(loginRequestDto.getEmail());
-
         authenticate(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequestDto.getEmail());
         final String token = jwtUtil.generateToken(userDetails);

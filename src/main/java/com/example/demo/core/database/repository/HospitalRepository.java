@@ -13,6 +13,8 @@ public interface HospitalRepository extends JpaRepository<HospitalEntity,Long> {
 
     List<HospitalEntity> findAll();
 
+    Optional<HospitalEntity> findById(long i);
+
     Optional<HospitalEntity> findByCodeHospital(String s);
 
     @Query("SELECT b FROM HospitalEntity b WHERE lower(b.region) LIKE %:search%")

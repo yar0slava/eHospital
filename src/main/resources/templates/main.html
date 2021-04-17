@@ -70,7 +70,7 @@
                             <form action="#" method="post" id="add-fav">
                                 <div style="width: 350px">
                                     <a style="text-decoration: none"
-                                       th:href="@{/hospital/(id=${hospital.id})}">
+                                       th:href="@{/hospital/{id}(id = ${hospital.id})}">
                                         <div style="height:100%; background-color: white; border-radius: 8px; margin-bottom: 15px; padding-left: 5%; padding-right: 5%">
                                             <img src = "">
                                             <div>
