@@ -2,7 +2,7 @@ $(document).ready(function () {
     $('#signIn').submit(sendLogin);
 
     function sendLogin(ev) {
-ev.preventDefault();
+        ev.preventDefault();
 
         let user = {
             email: $("#email").val(),
@@ -21,20 +21,18 @@ ev.preventDefault();
             },
             success: function (response, status, xhr) {
                 console.log(xhr.responseJSON);
-               // localStorage.setItem("token", xhr.getResponseHeader("Authorization"));
+                // localStorage.setItem("token", xhr.getResponseHeader("Authorization"));
                 localStorage.setItem("token", xhr.responseJSON.token);
-                window.location='/main';
-               // getMain();
+                window.location = '/main';
+                // getMain();
 
             },
-            error:  function (response, status, xhr) {
-                console.log("nnn");
-
+            error: function (response, status, xhr) {
+                alert("Incorrect login or password");
             }
-
         })
-
     }
+
     //
     // function getMain(){
     //         $.ajax({

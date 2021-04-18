@@ -34,7 +34,7 @@ function sendRegistration() {
             // window.location = '/login';
         },
         error: function (response) {
-            alert(response.responseText);
+            alert("Account with this email already exists");
         }
     })
 }
