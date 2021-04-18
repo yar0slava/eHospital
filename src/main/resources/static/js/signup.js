@@ -1,4 +1,5 @@
 document.getElementById("hospital").style.display = "none";
+document.getElementById("specializations").style.display = "none";
 
 function sendRegistration() {
     let hospital="";
@@ -61,6 +62,8 @@ function nextPrev(n) {
     let rol = $("#role").val();
     if(rol === "doctor"){
         document.getElementById("hospital").style.display = "block";
+        document.getElementById("specializations").style.display = "block";
+
     }
 
     var x = document.getElementsByClassName("tab");
