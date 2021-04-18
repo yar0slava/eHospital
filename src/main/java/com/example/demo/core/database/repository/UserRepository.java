@@ -38,4 +38,7 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity,Lo
     @Query("SELECT b FROM UserEntity b WHERE b.hospital.town LIKE %:town% AND b.hospital.region like %:rgion%")
     List<UserEntity> findAllWhereTownAndRegionLike(@Param("town") String town,
                                                    @Param("rgion") String rgion);
+
+    @Query("SELECT b FROM UserEntity b WHERE lower(b.hospital.town) LIKE %:s% OR lower(b.hospital.region) like %:s%")
+    List<UserEntity> findAllWhereTownOrRegionLike(@Param("s") String s);
 }
