@@ -73,57 +73,88 @@
                     <div id="filtrHospitalsRsult" class="row"></div>
                     <div id="hospitals" class="row">
                         <div th:each="doctor : ${doctors}" style="display: inline-block;">
-
                             <form action="#" method="post" id="add-fav">
-                                <div style="width: 350px">
+                                <div style="width: 350px; text-align: center">
                                     <a style="text-decoration: none">
-                                        <div style="height:100%; background-color: white; border-radius: 8px; margin-bottom: 15px; padding-left: 5%; padding-right: 5%">
+                                        <div style="background-color: white; border-radius: 8px; margin-bottom: 15px; padding-left: 5%; padding-right: 5%">
                                             <img src = "">
                                             <div>
-                                                <div class="row">
-                                                    <div class="col-sm-3"></div>
-                                                    <div class="col-sm-6 text-center">
-                                                        <p> <span th:text="${doctor.getLastName()}"></span>  <span th:text="${doctor.getFirstName()}"></span></p>
-                                                    </div>
-                                                    <div class="col-sm-3"></div>
-                                                </div>
-                                                <div class="row text-center">
-                                                    <div class="col-sm-2"></div>
-                                                    <div class="col-sm-8">
+                                                <p> <span th:text="${doctor.getLastName()}"></span>  <span th:text="${doctor.getFirstName()}"></span></p>
+                                                <div style="padding-bottom: 5px">
+                                                    <div style="width:330px;display: inline-block; text-align: center">
                                                         <div th:each="sp : ${doctor.getSpecialization()}" style="display: inline; padding-right: 10px;">
                                                             <span  th:text="${sp.getName()}">, </span>
                                                         </div>
-
                                                         <p> <span th:text="${doctor.getHospital().getTown()}"></span>, <span th:text="${doctor.getHospital().getRegion()}"></span></p>
                                                         <p> <span th:text="${doctor.getEmail()}"></span></p>
                                                     </div>
-                                                    <div class="col-sm-2"></div>
+                                                    <div style="width: 320px;">
+                                                        <button style="border-radius:8px; background: #4aa1f3; width: 100%;text-shadow: none; color:white !important;padding: 5px 2px 5px 2px;font-weight: bold;">
+                                                            View details
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div class="row">
-                                                    <button class="btn btn-block" style="background: #4aa1f3;color:white !important;font-weight: bold;">
-                                                        View details
-                                                    </button>
-                                                </div>
-
-<!--                                                <div style="padding-bottom: 5px">-->
-<!--                                                    <div style="width:160px;display: inline-block;">-->
-
-<!--                                                    </div>-->
-<!--                                                    <div style="width:20px; display: inline-block;"></div>-->
-<!--                                                    <div style="width: 120px; display: inline-block;">-->
-<!--                                                        <button style="border-radius:8px; background: #4aa1f3; width: 100%;text-shadow: none; color:white !important;padding: 5px 2px 5px 2px;font-weight: bold;">-->
-<!--                                                            View details-->
-<!--                                                        </button>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
                                             </div>
                                         </div>
                                     </a>
                                 </div>
                             </form>
-
                         </div>
                     </div>
+
+<!--                    <div id="hospitals" class="row">-->
+<!--                        <div th:each="doctor : ${doctors}" style="display: inline-block;">-->
+
+<!--                            <form action="#" method="post" id="add-fav">-->
+<!--                                <div style="width: 350px">-->
+<!--                                    <a style="text-decoration: none">-->
+<!--                                        <div style="height:100%; background-color: white; border-radius: 8px; margin-bottom: 15px; padding-left: 5%; padding-right: 5%">-->
+<!--                                            <img src = "">-->
+<!--                                            <div>-->
+<!--                                                <div class="row">-->
+<!--                                                    <div class="col-sm-3"></div>-->
+<!--                                                    <div class="col-sm-6 text-center">-->
+<!--                                                        <p> <span th:text="${doctor.getLastName()}"></span>  <span th:text="${doctor.getFirstName()}"></span></p>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-sm-3"></div>-->
+<!--                                                </div>-->
+<!--                                                <div class="row text-center">-->
+<!--                                                    <div class="col-sm-2"></div>-->
+<!--                                                    <div class="col-sm-8">-->
+<!--                                                        <div th:each="sp : ${doctor.getSpecialization()}" style="display: inline; padding-right: 10px;">-->
+<!--                                                            <span  th:text="${sp.getName()}">, </span>-->
+<!--                                                        </div>-->
+
+<!--                                                        <p> <span th:text="${doctor.getHospital().getTown()}"></span>, <span th:text="${doctor.getHospital().getRegion()}"></span></p>-->
+<!--                                                        <p> <span th:text="${doctor.getEmail()}"></span></p>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-sm-2"></div>-->
+<!--                                                </div>-->
+<!--                                                <div class="row">-->
+<!--                                                    <button class="btn btn-block" style="background: #4aa1f3;color:white !important;font-weight: bold;">-->
+<!--                                                        View details-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+
+<!--&lt;!&ndash;                                                <div style="padding-bottom: 5px">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    <div style="width:160px;display: inline-block;">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    <div style="width:20px; display: inline-block;"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    <div style="width: 120px; display: inline-block;">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                        <button style="border-radius:8px; background: #4aa1f3; width: 100%;text-shadow: none; color:white !important;padding: 5px 2px 5px 2px;font-weight: bold;">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                            View details&ndash;&gt;-->
+<!--&lt;!&ndash;                                                        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                            </form>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>

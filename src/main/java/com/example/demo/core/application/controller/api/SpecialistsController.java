@@ -1,5 +1,6 @@
 package com.example.demo.core.application.controller.api;
 
+import com.example.demo.core.database.entity.HospitalEntity;
 import com.example.demo.core.database.entity.Specialization;
 import com.example.demo.core.database.entity.UserEntity;
 import com.example.demo.core.domain.service.HospitalService;
@@ -38,18 +39,19 @@ public class SpecialistsController {
 
     @ResponseBody
     @GetMapping("/search-doctors")
-    public ResponseEntity<Set<UserEntity>> searchHospital(@RequestParam(name = "specialization", required = false) List<String> specialization,
+    public ResponseEntity<List<UserEntity>> searchHospital(@RequestParam(name = "specialization", required = false) List<String> specialization,
                                                            @RequestParam(name = "town", required = false) String town,
                                                            @RequestParam(name = "region", required = false) String region
          ){
-        System.out.println("==================================");
-        System.out.println(specialization);
-        System.out.println(town);
-        System.out.println(region);
 
-        Set<UserEntity> userEntities = userService.findDoctors(specialization,town,region);
-        System.out.println("=================================");
+        List<UserEntity> userEntities = userService.findDoctors(specialization,town,region);
         return  ResponseEntity.ok().body(userEntities);
+    }
+
+    @ResponseBody
+    @GetMapping("/search-doctors-input")
+    public ResponseEntity<Set<UserEntity>> searchHospitalInput(@RequestParam(name = "search", required = false) String search) {
+        return ResponseEntity.ok().body(userService.findDoctorsBySpecializationTownRegion(search));
     }
 
 
