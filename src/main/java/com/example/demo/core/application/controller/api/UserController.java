@@ -52,6 +52,6 @@ public class UserController {
     @GetMapping("/specializations")
     @ResponseStatus(HttpStatus.OK)
     public List<Specialization> getUsersGrouped(){
-        return userService.getQualifications();
+        return userService.getSpezialization();
     }
 }

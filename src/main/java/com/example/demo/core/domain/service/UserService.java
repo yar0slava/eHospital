@@ -128,7 +128,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<Specialization> getQualifications(){
+    public List<Specialization> getSpezialization(){
         return specializationRepository.findAll();
     }
 
@@ -146,5 +146,15 @@ public class UserService implements UserDetailsService {
         UserEntity userEntity = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(""));
         return userMapper.toModel(userEntity);
+    }
+
+    public List<UserEntity> getAllDoctorsOfHospital(long id) {
+        List<UserEntity> list = new ArrayList<>();
+        Optional<HospitalEntity> hospitalEntity = hospitalRepository.findById(id);
+        if(hospitalEntity.isPresent()){
+            list = userRepository.findByHospital(hospitalEntity.get());
+            return  list;
+        }
+        return list;
     }
 }

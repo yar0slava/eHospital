@@ -55,5 +55,4 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
     private Set<Specialization> specialization;
-
 }

@@ -5,6 +5,7 @@ import com.example.demo.core.database.repository.HospitalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HospitalService {
@@ -34,5 +35,10 @@ public class HospitalService {
 
     public List<HospitalEntity> findHospitalsByNameTownRegion(String search) {
         return hospitalRepository.findAllWhereNameLikeOrTownLikeOrRegionLike(search);
+    }
+
+
+    public Optional<HospitalEntity> getHospitalById(long id) {
+        return hospitalRepository.findById(id);
     }
 }

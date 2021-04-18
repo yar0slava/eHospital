@@ -10,23 +10,45 @@
 
 <!--перелік усіх спеціалістів лікарні-->
 <div class="container">
+    <br/>
+    <br>
+<div class="row text-center">
+    <h2 th:text="${hospital.name}"></h2>
+    <br/>
+    <br/>
+    <h6> <span th:text="${hospital.town}"></span>, <span th:text="${hospital.region}"></span></h6>
+</div>
+
     <table class='table table-hover mt-5'>
         <thead class='table-dark'>
-        <th>Isbn</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th></th>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Birthday</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Specialization</th>
+
         </thead>
         <tbody>
-        <tr th:each="book : ${us}">
-            <td th:text="${book.isbn}"></td>
-            <td th:text="${book.title}"></td>
-            <td th:text="${book.author}"></td>
-            <form th:action="@{/del-fav}" method="post">
-                <td><input type="hidden" th:value="${book.isbn}" name="isbn"/>
-                    <button type="submit" class="btn btn-outline-dark">Delete</button>
-                </td>
-            </form>
+        <tr th:each="doctor : ${doctors}">
+            <td th:text="${doctor.id}"></td>
+            <td th:text="${doctor.firstName}"></td>
+            <td th:text="${doctor.lastName}"></td>
+            <td th:text="${doctor.birthday}"></td>
+            <td th:text="${doctor.email}"></td>
+            <td th:text="${doctor.gender}"></td>
+
+            <td>
+                <div th:each="d : ${doctor.specialization}" th:text="${d.name}"> </div>
+            </td>
+            <td > <a style="text-decoration: none"
+                     th:href="@{/doctor/{id}(id = ${doctor.id})}">View Profile</a></td>
+<!--            <form th:action="@{/del-fav}" method="post">-->
+<!--                <td><input type="hidden" th:value="${book.isbn}" name="isbn"/>-->
+<!--                    <button type="submit" class="btn btn-outline-dark">Delete</button>-->
+<!--                </td>-->
+<!--            </form>-->
         </tr>
         </tbody>
     </table>
