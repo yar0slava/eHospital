@@ -1,5 +1,7 @@
 package com.example.demo.core.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,6 +14,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+
 @Table(name = "patients")
 public class UserEntity {
 
@@ -44,6 +47,7 @@ public class UserEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Authority> authority;
 
+   // @JsonIgnoreProperties("users")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private HospitalEntity hospital;
@@ -54,5 +58,6 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
+   // @JsonIgnore
     private Set<Specialization> specialization;
 }

@@ -1,5 +1,7 @@
 package com.example.demo.core.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,6 +32,9 @@ public class HospitalEntity {
     @Column(name = "region")
     private String region;
 
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "hospital")
+    //@JsonIgnoreProperties("hospital")
     private List<UserEntity> users;
 }

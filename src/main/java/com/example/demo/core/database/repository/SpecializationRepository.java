@@ -7,5 +7,9 @@ import java.util.Optional;
 
 public interface SpecializationRepository extends JpaRepository<Specialization,Long>{
 
+    Optional<Specialization> findSpecializationByName(String nam);
+
+
     Optional<Specialization> findByNameEquals(String name);
+
 }
