@@ -16,10 +16,13 @@ public class UserDto {
     @NotNull
     private long id;
 
+    @NotNull
     private Gender gender;
 
+    @NotEmpty
     private String firstName;
 
+    @NotEmpty
     private String lastName;
 
     @Email
