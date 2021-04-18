@@ -155,4 +155,84 @@ public class UserService implements UserDetailsService {
         }
         return list;
     }
+
+    public List<UserEntity> getAllDoctors() {
+        return userRepository.findAllDoctors();
+
+    }
+
+    public Set<Specialization> getSpezialization(List<UserEntity> userEntities) {
+        Set<Specialization> specializations = new HashSet<>();
+
+        for(int i=0; i< userEntities.size();i++){
+            Set<Specialization> sp = userEntities.get(i).getSpecialization();
+
+            for (Iterator<Specialization> it = sp.iterator(); it.hasNext(); ) {
+                Specialization f = it.next();
+                specializations.add(f);
+            }
+        }
+
+        return specializations;
+
+    }
+
+    public Set<String> getTowns(List<UserEntity> userEntities) {
+        Set<String> towns = new HashSet<>();
+        for(int i=0; i< userEntities.size();i++){
+            towns.add(userEntities.get(i).getHospital().getTown());
+        }
+        return towns;
+    }
+
+    public Set<String> getRgions(List<UserEntity> userEntities) {
+        Set<String> rgions = new HashSet<>();
+        for(int i=0; i< userEntities.size();i++){
+            rgions.add(userEntities.get(i).getHospital().getRegion());
+        }
+        return rgions;
+    }
+
+    public Set<UserEntity> findDoctors(List<String> spialization, String town, String rgion) {
+
+//        if (spialization.isEmpty() && town == "" && rgion == "") {
+//            return getAllDoctors();
+//        }
+//        if (spialization.isEmpty()  && town == "")  {
+//            return userRepository.findAllWhereRgionLike(rgion);
+//        }
+//        if (spialization.isEmpty()  && rgion == "")  {
+//            return userRepository.findAllWhereTownLike(town);
+//        }
+
+      Set<UserEntity> rsult= new HashSet<>();
+
+        if (town == null && rgion == null)  {
+            System.out.println("HR");
+            for(int i=0; i<spialization.size();i++){
+                Optional<Specialization> specialization = specializationRepository.findSpecializationByName(spialization.get(i));
+                List<UserEntity> userEntities = userRepository.findBySpecializationContains(specialization.get());
+                for(int j=0; j<userEntities.size();j++){
+                    rsult.add(userEntities.get(j));
+                }
+            }
+
+            return rsult;
+        }
+
+//        if (spialization.isEmpty())  {
+//            return userRepository.findAllWhereTownAndRegionLike(town,rgion);
+//        }
+//        if (town == "" )  {
+//            return userRepository.findAllWhereSpecializationAndRegionLike(spialization,rgion);
+//        }
+//
+//        if (rgion == "" )  {
+//            return userRepository.findAllWhereSpecializationAndTownLike(spialization,town);
+//        }
+//
+//       return userRepository.findAllWhereSpecializationAndTownAndRegionLike(spialization,town,rgion);
+
+        return null;
+    }
 }
