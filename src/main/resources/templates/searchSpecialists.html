@@ -75,7 +75,8 @@
                         <div th:each="doctor : ${doctors}" style="display: inline-block;">
                             <form action="#" method="post" id="add-fav">
                                 <div style="width: 350px; text-align: center">
-                                    <a style="text-decoration: none">
+                                    <a style="text-decoration: none"
+                                       th:href="@{/doctor/{id}(id = ${doctor.id})}">
                                         <div style="background-color: white; border-radius: 8px; margin-bottom: 15px; padding-left: 5%; padding-right: 5%">
                                             <img src = "">
                                             <div>
