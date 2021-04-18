@@ -1,4 +1,5 @@
 document.getElementById("hospital").style.display = "none";
+document.getElementById("specializations").style.display = "none";
 
 function sendRegistration() {
     let hospital="";
@@ -15,8 +16,8 @@ function sendRegistration() {
         birthday: $("#birthday").val(),
         phone: $("#phone").val(),
         hospitalCode: hospital,
-        authority:[{name: $("#role").val()}],
-        qualifications: [$("#qualification").val()]
+        authority:[$("#role").val()],
+        specializations: $("#specializations").val()
     }
 
     console.log(user);
@@ -33,7 +34,7 @@ function sendRegistration() {
             // window.location = '/login';
         },
         error: function (response) {
-            alert(response.responseText);
+            alert("Account with this email already exists");
         }
     })
 }
@@ -61,6 +62,8 @@ function nextPrev(n) {
     let rol = $("#role").val();
     if(rol === "doctor"){
         document.getElementById("hospital").style.display = "block";
+        document.getElementById("specializations").style.display = "block";
+
     }
 
     var x = document.getElementsByClassName("tab");
@@ -102,11 +105,11 @@ $(document).ready(function(){
 
     $.ajax({
         type: "GET",
-        url: "/api/users/qualifications",
+        url: "/api/users/specializations",
         dataType: "json",
         success: function (array) {
             array.forEach(function(object){
-                $("#qualification").append('<option value="' + object.name + '">' + object.name + '</option>');
+                $("#specializations").append('<option value="' + object.name + '">' + object.name + '</option>');
             })
         }
     })

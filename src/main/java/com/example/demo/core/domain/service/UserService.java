@@ -94,18 +94,20 @@ public class UserService implements UserDetailsService {
         UserEntity userEntity = addUserMapper.toEntity(user);
 
         //setting authorities
-        Set<Authority> authorities = new TreeSet<>();
+        Set<Authority> authorities = new HashSet<>();
 
         for (String s: user.getAuthority()) {
+            System.out.println(s);
             authorities.add(authorityRepository.findByNameEquals(s).get());
         }
         userEntity.setAuthority(authorities);
 
         //setting specializations
-        Set<Specialization> specializations = new TreeSet<>();
+        Set<Specialization> specializations = new HashSet<>();
 
         for (String s: user.getSpecializations()) {
-            authorities.add(authorityRepository.findByNameEquals(s).get());
+            System.out.println(s);
+            specializations.add(specializationRepository.findByNameEquals(s).get());
         }
 
         userEntity.setSpecialization(specializations);
