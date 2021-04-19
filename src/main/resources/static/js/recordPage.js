@@ -1,34 +1,64 @@
 $(document).ready(function () {
     var dateToday = new Date();
 
+    $('#nwDates').click(addNwDate);
+    function addNwDate() {
+        let mt= $("#meetingTime").val();
+        $.ajax({
+            type: 'PUT',
+            url: "/appointments/signup?meeting="+mt,
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        })
+        console.log(mt);
+    }
+
     $('input[name="birthday"]').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
         minDate: dateToday,
         minYear: new Date().getFullYear(),
         maxYear: new Date().getFullYear()+1
-    });
-
-    $('#nwDates').click(addNwDate);
-    function addNwDate() {
-
-        let s = $('input[name="birthday"]').val();
-        let k = new Date(s).toISOString().substring(0,19);
-        let h = k.substring(0,11)+"00"+k.substring(13,19);
+    }, function(start, end, label) {
+        let n = start._d.toLocaleString();
+        console.log(n);
+        let f = n.substring(6,10)+"-"+n.substring(3,5)+"-"+n.substring(0,2)+"T00:00:00";
+        console.log(f);
 
         let id =$("#doctorId").val()
-        let myUrl = "/appointments/free?doctorId="+id+"&date="+h;
+        let myUrl = "/appointments/free?doctorId="+id+"&date="+f;
 
         $.ajax({
             type: 'GET',
             url: myUrl,
             success: function (response) {
                 console.log(response);
+                $('#timess').html(searchResults(response));
             },
             error: function (response) {
 
             }
         })
-    }
+    });
 
+    function searchResults(r){
+        if(r.length===0){
+            return "<label class='form-label'>There is no available time for this day.</label>";
+        }
+
+        let rs="<label class='form-label'>Choose available time: </label>";
+
+            rs+="<select name='meetingTime' id='meetingTime'>";
+        for(let i=0; i<r.length;i++) {
+            rs += "<option value='" + r[i].id + "'>" + r[i].dateTime.substring(11, 16) +
+                "</option>";
+        }
+              rs+=  "</select>";
+
+        return rs;
+    }
 });

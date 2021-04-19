@@ -2,11 +2,17 @@ package com.example.demo.core.application.controller.api;
 
 import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
+import com.example.demo.core.application.dto.UserDto;
 import com.example.demo.core.domain.service.AppointmentService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.security.Security;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,10 +29,18 @@ public class AppointmentController {
 
     //  patient makes an appointment for existing DateTime
     // should pass AppointmentDto with id, patient id, (datetime), (doctor id)
+    @PreAuthorize("isFullyAuthenticated()")
     @PutMapping(value = "/signup")
     @ResponseStatus(HttpStatus.OK)
-    public AppointmentDto addAppointment(@RequestBody AppointmentDto appointmentDto){
-        return appointmentService.addAppointment(appointmentDto);
+    public AppointmentDto addAppointment(@RequestParam(name = "meeting", required = true) long meeting){
+        System.out.println("======================");
+        System.out.println(meeting);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto userDto = (UserDto) authentication.getPrincipal();
+
+        System.out.println(userDto.getId());
+        return appointmentService.addAppointment(meeting, userDto.getId());
     }
 
     // patient cancels an appointment

@@ -122,6 +122,8 @@ public class UserService implements UserDetailsService {
 
                 userEntity.setHospital(hospitalEntity.get());
 
+                System.out.println("==========================");
+                System.out.println(userEntity.getId());
                 UserEntity addUser = userRepository.save(userEntity);
                 return userMapper.toDto(addUser);
             }
