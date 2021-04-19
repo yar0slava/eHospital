@@ -2,11 +2,13 @@ package com.example.demo.core.application.controller.api;
 
 import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
+import com.example.demo.core.domain.model.User;
 import com.example.demo.core.domain.service.AppointmentService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -45,6 +47,17 @@ public class AppointmentController {
 
     // doctor adds free DateTime for appointments from date 1 to date 2
     // should pass doctor id, dateTime and dateTime
+//    @PostMapping("/add")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<AppointmentDto> addFreeAppointment(@RequestBody AddAppointmentRangeDto addAppointmentRangeDto){
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        final User authenticatedUser = (User) auth.getPrincipal();
+//
+//        return appointmentService.addFreeAppointment(addAppointmentRangeDto, authenticatedUser);
+//    }
+
+    // doctor adds free DateTime for appointments from date 1 to date 2
+    // should pass doctor id, dateTime and dateTime
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentDto> addFreeAppointment(@RequestBody AddAppointmentRangeDto addAppointmentRangeDto){
@@ -75,8 +88,8 @@ public class AppointmentController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentDto> findByDateTimeBetween(@RequestParam(value = "from")LocalDateTime from,
-                                                      @RequestParam(value = "to")LocalDateTime to){
-        return appointmentService.findBetween(from,to);
+    public List<AppointmentDto> getPaged(@RequestParam(value = "page") Integer page,
+                                   @RequestParam(value = "size") Integer size) {
+        return appointmentService.getAll(page, size);
     }
 }
