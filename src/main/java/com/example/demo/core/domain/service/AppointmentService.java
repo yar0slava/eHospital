@@ -71,7 +71,7 @@ public class AppointmentService {
     }
 
     public List<AppointmentDto> findDoctorsFreeAndDate(long doctorId, LocalDateTime date){
-        return StreamSupport.stream(appointmentRepository.findByPatientIdIsNullAndDoctorIdIsAndDateTimeAfter(doctorId,date).spliterator(), false)
+        return StreamSupport.stream(appointmentRepository.findByPatientIdIsNullAndDoctorIdIsAndDateTimeAfterAndDateTimeBefore(doctorId,date,date.plusDays(1)).spliterator(), false)
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
     }

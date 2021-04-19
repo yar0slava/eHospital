@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" href="/css/style.css">
 
 </head>
@@ -15,7 +15,7 @@
 <main role="main" class="flex-shrink-0">
     <div class="container">
         <div class="page-header">
-            <h1 class="mt-5">Лікар </h1>
+            <h1 class="mt-5">Doctor </h1>
         </div>
         <div class="container">
             <div class="row">
@@ -24,20 +24,20 @@
 
                     <thead class="text-center">
                     <tr>
-                        <th scope="col" class="text-center" colspan="2">Дані лікаря</th>
+                        <th scope="col" class="text-center" colspan="2">Information about doctor</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="col">Спеціальність</th>
+                        <th scope="col">Specialization</th>
                         <td></td>
                     </tr>
                     <tr>
-                        <th scope="col">Лікарня</th>
+                        <th scope="col">Hospital</th>
                         <td></td>
                     </tr>
                     <tr>
-                        <th scope="col">Електронна пошта</th>
+                        <th scope="col">Email</th>
                         <td></td>
                     </tr>
 
@@ -62,6 +62,21 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="container" id="appointments">
+            <table class='table table-hover mt-5'>
+                <thead class='table-dark'>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Patient</th>
+                </thead>
+                <tbody id="appointmentsList">
+
+                </tbody>
+            </table>
+
         </div>
 
 
