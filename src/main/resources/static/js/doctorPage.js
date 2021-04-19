@@ -15,30 +15,25 @@ $(document).ready(function () {
        let fd = new Date(finish).toISOString().substring(0,19);
 
        let u = {
-
+           doctorId:1245,
+           from: bd,
+           to:fd
        }
+       console.log(u);
         $.ajax({
             type: 'POST',
-            url: '/add',
-            data: JSON.stringify(user),
+            url: '/appointments/add',
+            data: JSON.stringify(u),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Content-Type', 'application/json')
             },
             success: function (response) {
                 console.log(response);
-                // window.location = '/login';
             },
             error: function (response) {
-                alert("Account with this email already exists");
+
             }
         })
-
     }
 
-
-    // $(function() {
-    //
-    //
-    //     $('input[name="daterange"]').daterangepicker();
-    // });
 });

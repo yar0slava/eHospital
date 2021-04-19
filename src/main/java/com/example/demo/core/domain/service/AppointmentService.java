@@ -81,7 +81,7 @@ public class AppointmentService {
         LocalDateTime currTime = addAppointmentRangeDto.getFrom();
         AppointmentEntity appointmentEntity = new AppointmentEntity();
         appointmentEntity.setDoctorId(addAppointmentRangeDto.getDoctorId());
-        while (currTime.getDayOfMonth()<=addAppointmentRangeDto.getTo().getDayOfMonth()){
+        while (currTime.isBefore(addAppointmentRangeDto.getTo())){
             for(int i = 12; i<18; i++){
                 currTime = currTime.withHour(i).withMinute(0);
                 System.out.println(currTime);
