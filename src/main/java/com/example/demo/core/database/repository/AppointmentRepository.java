@@ -14,6 +14,8 @@ public interface AppointmentRepository extends JpaRepository<AppointmentEntity,L
 
     List<AppointmentEntity> findByPatientIdIsNullAndDoctorIdIs(long doctorId);
 
+    List<AppointmentEntity> findByPatientIdIsNullAndDoctorIdIsAndDateTimeAfter(long doctorId, LocalDateTime date);
+
     List<AppointmentEntity> findByDateTimeBetween(LocalDateTime from, LocalDateTime to);
 
     void deleteById(long id);
