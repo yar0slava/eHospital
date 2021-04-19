@@ -35,9 +35,10 @@ public class AppointmentService {
 
     //  patient makes an appointment for existing DateTime
     // should pass AppointmentDto with id, patient id, (datetime), (doctor id)
-    public AppointmentDto addAppointment(long appointmentDto, long id){
+    public AppointmentDto addAppointment(long appointmentDto, long i){
+
         AppointmentEntity appointmentEntity = appointmentRepository.findById(appointmentDto);
-           appointmentEntity.setPatientId(id);
+           appointmentEntity.setPatientId(i);
             AppointmentEntity saved = appointmentRepository.save(appointmentEntity);
             return appointmentMapper.toDto(saved);
     }
