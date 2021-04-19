@@ -44,7 +44,12 @@ public class UserEntity {
     private String password;
 
     @Column(name = "authority")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_to_authorities",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id")
+    )
     private Set<Authority> authority;
 
    // @JsonIgnoreProperties("users")
