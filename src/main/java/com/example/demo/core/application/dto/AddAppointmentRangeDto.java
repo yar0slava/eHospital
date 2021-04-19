@@ -8,15 +8,14 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class AppointmentDto {
-
-    private long id;
-
-    @NotNull
-    private LocalDateTime dateTime;
-
-    private Long patientId;
+public class AddAppointmentRangeDto {
 
     @NotNull
     private Long doctorId;
+
+    @NotNull
+    private LocalDateTime from;
+
+    @NotNull
+    private LocalDateTime to;
 }

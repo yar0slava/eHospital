@@ -1,5 +1,6 @@
 package com.example.demo.core.application.controller.api;
 
+import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
 import com.example.demo.core.domain.service.AppointmentService;
 import org.springframework.http.HttpStatus;
@@ -42,12 +43,12 @@ public class AppointmentController {
         appointmentService.deleteFreeAppointment(id);
     }
 
-    // doctor adds free DateTime for appointment
-    // should pass doctor id, dateTime in AppointmentDto
+    // doctor adds free DateTime for appointments from date 1 to date 2
+    // should pass doctor id, dateTime and dateTime
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
-    public AppointmentDto addFreeAppointment(@RequestBody AppointmentDto appointmentDto){
-        return appointmentService.addFreeAppointment(appointmentDto);
+    public List<AppointmentDto> addFreeAppointment(@RequestBody AddAppointmentRangeDto addAppointmentRangeDto){
+        return appointmentService.addFreeAppointment(addAppointmentRangeDto);
     }
 
     @GetMapping("/patient/{patientId}")
@@ -59,7 +60,11 @@ public class AppointmentController {
     @GetMapping("/doctor/{doctorId}")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentDto> findByDoctorId(@PathVariable("doctorId") long doctorId){
-        return appointmentService.findByDoctorId(doctorId);
+        List<AppointmentDto> res = appointmentService.findByDoctorId(doctorId);
+        for (AppointmentDto a: res) {
+            System.out.println(a.toString());
+        }
+        return res;
     }
 
     @GetMapping("/free/doctor/{doctorId}")
