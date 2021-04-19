@@ -87,9 +87,6 @@ public class AppointmentService {
 
         LocalDateTime currTime = addAppointmentRangeDto.getFrom();
 
-        AppointmentEntity appointmentEntity = new AppointmentEntity();
-        appointmentEntity.setDoctorId(addAppointmentRangeDto.getDoctorId());
-
         AppointmentEntity appointmentEntity;
 
         while (currTime.isBefore(addAppointmentRangeDto.getTo())){

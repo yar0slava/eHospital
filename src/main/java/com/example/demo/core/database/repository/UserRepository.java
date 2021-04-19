@@ -1,5 +1,6 @@
 package com.example.demo.core.database.repository;
 
+import com.example.demo.core.application.dto.UserDto;
 import com.example.demo.core.database.entity.HospitalEntity;
 import com.example.demo.core.database.entity.Specialization;
 import com.example.demo.core.database.entity.UserEntity;
@@ -26,6 +27,8 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity,Lo
     Page<UserEntity> findAll(Pageable pageable);
 
     Optional<UserEntity> findByEmail(String email);
+
+    Optional<UserEntity> findById(long i);
 
     List<UserEntity> findBySpecializationContains(Specialization specialization);
 
