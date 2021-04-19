@@ -12,9 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -33,9 +35,11 @@ public class AppointmentService {
 
     //  patient makes an appointment for existing DateTime
     // should pass AppointmentDto with id, patient id, (datetime), (doctor id)
-    public AppointmentDto addAppointment(AppointmentDto appointmentDto){
-        AppointmentEntity saved = appointmentRepository.save(appointmentMapper.toEntity(appointmentDto));
-        return appointmentMapper.toDto(saved);
+    public AppointmentDto addAppointment(long appointmentDto, long id){
+        AppointmentEntity appointmentEntity = appointmentRepository.findById(appointmentDto);
+           appointmentEntity.setPatientId(id);
+            AppointmentEntity saved = appointmentRepository.save(appointmentEntity);
+            return appointmentMapper.toDto(saved);
     }
 
     // patient cancels an appointment
