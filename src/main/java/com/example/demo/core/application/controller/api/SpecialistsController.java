@@ -56,7 +56,7 @@ public class SpecialistsController {
 
     @GetMapping("/doctor")
     public String searchHospitalInput() {
-        return "patient";
+        return "doctorPage";
     }
 
 }

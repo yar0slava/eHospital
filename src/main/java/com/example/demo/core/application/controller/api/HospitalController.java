@@ -22,7 +22,6 @@ public class HospitalController {
         this.userService = userService;
     }
 
-
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String getMain(Model model) {
         List<HospitalEntity> hospitals = hospitalService.getAllHospitals();
@@ -45,7 +44,6 @@ public class HospitalController {
     @GetMapping("/search-hospitals")
     public ResponseEntity<List<HospitalEntity>> searchHospital(@RequestParam(name = "town", required = false) String town,
                                                            @RequestParam(name = "region", required = false) String region) {
-
         return ResponseEntity.ok().body(hospitalService.findHospitals(town,region));
     }
 
