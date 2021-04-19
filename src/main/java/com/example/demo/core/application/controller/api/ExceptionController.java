@@ -1,6 +1,7 @@
 package com.example.demo.core.application.controller.api;
 
 import com.example.demo.core.application.dto.ApiError;
+import com.example.demo.core.domain.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,11 @@ public class ExceptionController {
 
     @ExceptionHandler
     public ResponseEntity<ApiError> handle(MissingPathVariableException exception){
+        return new ResponseEntity<>(new ApiError(LocalDateTime.now(), exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ApiError> handle(UserService.WrongHospitalCodeException exception){
         return new ResponseEntity<>(new ApiError(LocalDateTime.now(), exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
