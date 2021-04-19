@@ -127,6 +127,7 @@ public class UserService implements UserDetailsService {
                 UserEntity addUser = userRepository.save(userEntity);
                 return userMapper.toDto(addUser);
             }else {
+                System.out.println("hhhhhhhhh");
                 throw new WrongHospitalCodeException("Wrong hospital code.");
             }
         }
