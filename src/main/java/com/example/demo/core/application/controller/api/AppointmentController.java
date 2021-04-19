@@ -21,6 +21,7 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
+
     //  patient makes an appointment for existing DateTime
     // should pass AppointmentDto with id, patient id, (datetime), (doctor id)
     @PutMapping(value = "/signup")
@@ -61,6 +62,10 @@ public class AppointmentController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentDto> addFreeAppointment(@RequestBody AddAppointmentRangeDto addAppointmentRangeDto){
+        System.out.println("=============================");
+        System.out.println(addAppointmentRangeDto.getDoctorId());
+        System.out.println(addAppointmentRangeDto.getFrom());
+        System.out.println(addAppointmentRangeDto.getTo());
         return appointmentService.addFreeAppointment(addAppointmentRangeDto);
     }
 

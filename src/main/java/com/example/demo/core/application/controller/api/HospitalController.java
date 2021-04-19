@@ -22,11 +22,6 @@ public class HospitalController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/doctor", method = RequestMethod.GET)
-    public String getPatient() {
-        return "doctorPage";
-    }
-
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String getMain(Model model) {
         List<HospitalEntity> hospitals = hospitalService.getAllHospitals();

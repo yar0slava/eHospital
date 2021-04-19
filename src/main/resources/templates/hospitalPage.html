@@ -43,7 +43,7 @@
                 <div th:each="d : ${doctor.specialization}" th:text="${d.name}"> </div>
             </td>
             <td > <a style="text-decoration: none"
-                     th:href="@{/doctor/{id}(id = ${doctor.id})}">View Profile</a></td>
+                     th:href="@{/reception/{id}(id = ${doctor.id})}">View Profile</a></td>
 <!--            <form th:action="@{/del-fav}" method="post">-->
 <!--                <td><input type="hidden" th:value="${book.isbn}" name="isbn"/>-->
 <!--                    <button type="submit" class="btn btn-outline-dark">Delete</button>-->

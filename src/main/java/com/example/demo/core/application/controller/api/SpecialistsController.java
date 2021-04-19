@@ -54,5 +54,9 @@ public class SpecialistsController {
         return ResponseEntity.ok().body(userService.findDoctorsBySpecializationTownRegion(search));
     }
 
+    @GetMapping("/doctor")
+    public String searchHospitalInput() {
+        return "doctorPage";
+    }
 
 }
