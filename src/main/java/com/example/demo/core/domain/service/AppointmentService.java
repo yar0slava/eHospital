@@ -70,8 +70,8 @@ public class AppointmentService {
                 .collect(Collectors.toList());
     }
 
-    public List<AppointmentDto> findDoctorsFree(long doctorId){
-        return StreamSupport.stream(appointmentRepository.findByPatientIdIsNullAndDoctorIdIs(doctorId).spliterator(), false)
+    public List<AppointmentDto> findDoctorsFreeAndDate(long doctorId, LocalDateTime date){
+        return StreamSupport.stream(appointmentRepository.findByPatientIdIsNullAndDoctorIdIsAndDateTimeAfter(doctorId,date).spliterator(), false)
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -86,9 +86,6 @@ public class AppointmentService {
         List<AppointmentDto> res = new ArrayList<>();
 
         LocalDateTime currTime = addAppointmentRangeDto.getFrom();
-
-        AppointmentEntity appointmentEntity = new AppointmentEntity();
-        appointmentEntity.setDoctorId(addAppointmentRangeDto.getDoctorId());
 
         AppointmentEntity appointmentEntity;
 

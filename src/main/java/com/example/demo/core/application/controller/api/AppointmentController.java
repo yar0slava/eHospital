@@ -2,13 +2,12 @@ package com.example.demo.core.application.controller.api;
 
 import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
-import com.example.demo.core.domain.model.User;
 import com.example.demo.core.domain.service.AppointmentService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -85,10 +84,11 @@ public class AppointmentController {
         return res;
     }
 
-    @GetMapping("/free/doctor/{doctorId}")
+    @GetMapping("/free")
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentDto> findByPatientIdIsNullAndDoctorIdIs(@PathVariable("doctorId") long doctorId){
-        return appointmentService.findDoctorsFree(doctorId);
+    public List<AppointmentDto> findFreeForDoctorAndDay(@RequestParam("doctorId") long doctorId,
+                                                        @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date){
+        return appointmentService.findDoctorsFreeAndDate(doctorId, date);
     }
 
     @GetMapping
