@@ -17,8 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @Controller
 public class LoginController {
 
@@ -61,7 +59,7 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto signUp(@RequestBody AddUserDto userDto) {
+    public UserDto signUp(@RequestBody AddUserDto userDto) throws UserService.WrongHospitalCodeException {
         System.out.println(userDto.toString());
         return userService.addUser(userDto);
     }

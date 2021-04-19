@@ -93,7 +93,7 @@ public class UserService implements UserDetailsService {
         return user.orElseThrow(() -> new NotFoundException(String.format("User not found with id %s",id)));
     }
 
-    public UserDto addUser(AddUserDto user){
+    public UserDto addUser(AddUserDto user) throws WrongHospitalCodeException {
 
         UserEntity userEntity = addUserMapper.toEntity(user);
 
@@ -126,6 +126,8 @@ public class UserService implements UserDetailsService {
                 System.out.println(userEntity.getId());
                 UserEntity addUser = userRepository.save(userEntity);
                 return userMapper.toDto(addUser);
+            }else {
+                throw new WrongHospitalCodeException("Wrong hospital code.");
             }
         }
 
@@ -282,5 +284,11 @@ public class UserService implements UserDetailsService {
             rsult.add(userEntitiesBySp.get(i));
         }
         return rsult;
+    }
+
+    public class WrongHospitalCodeException extends Throwable {
+        public WrongHospitalCodeException(String s) {
+            super(s);
+        }
     }
 }
