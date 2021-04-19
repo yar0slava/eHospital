@@ -1,5 +1,6 @@
 package com.example.demo.core.domain.service;
 
+import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
 import com.example.demo.core.database.entity.AppointmentEntity;
 import com.example.demo.core.database.repository.AppointmentRepository;
@@ -7,6 +8,7 @@ import com.example.demo.core.mapper.AppointmentMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -71,5 +73,24 @@ public class AppointmentService {
         return StreamSupport.stream(appointmentRepository.findByDateTimeBetween(from,to).spliterator(), false)
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public List<AppointmentDto> addFreeAppointment(AddAppointmentRangeDto addAppointmentRangeDto) {
+        List<AppointmentDto> res = new ArrayList<>();
+
+        LocalDateTime currTime = addAppointmentRangeDto.getFrom();
+        AppointmentEntity appointmentEntity = new AppointmentEntity();
+        appointmentEntity.setDoctorId(addAppointmentRangeDto.getDoctorId());
+        while (currTime.getDayOfMonth()<=addAppointmentRangeDto.getTo().getDayOfMonth()){
+            for(int i = 12; i<18; i++){
+                currTime = currTime.withHour(i).withMinute(0);
+                System.out.println(currTime);
+                appointmentEntity.setDateTime(currTime);
+                res.add(appointmentMapper.toDto(appointmentRepository.save(appointmentEntity)));
+            }
+            currTime = currTime.plusDays(1);
+        }
+
+        return res;
     }
 }
