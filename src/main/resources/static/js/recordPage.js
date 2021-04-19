@@ -7,9 +7,14 @@ $(document).ready(function () {
         $.ajax({
             type: 'PUT',
             url: "/appointments/signup?meeting="+mt,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Content-Type', 'application/json'),
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("token"))
+            },
             success: function (response) {
                 console.log(response);
             },
+
             error: function (response) {
                 console.log(response);
             }
