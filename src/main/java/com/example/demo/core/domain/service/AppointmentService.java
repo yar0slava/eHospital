@@ -8,6 +8,8 @@ import com.example.demo.core.database.repository.AppointmentRepository;
 import com.example.demo.core.database.repository.UserRepository;
 import com.example.demo.core.domain.model.User;
 import com.example.demo.core.mapper.AppointmentMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -84,10 +86,12 @@ public class AppointmentService {
         List<AppointmentDto> res = new ArrayList<>();
 
         LocalDateTime currTime = addAppointmentRangeDto.getFrom();
-        AppointmentEntity appointmentEntity = new AppointmentEntity();
-        appointmentEntity.setDoctorId(addAppointmentRangeDto.getDoctorId());
+        AppointmentEntity appointmentEntity;
+
         while (currTime.isBefore(addAppointmentRangeDto.getTo())){
             for(int i = 12; i<18; i++){
+                appointmentEntity = new AppointmentEntity();
+                appointmentEntity.setDoctorId(addAppointmentRangeDto.getDoctorId());
                 currTime = currTime.withHour(i).withMinute(0);
                 System.out.println(currTime);
                 appointmentEntity.setDateTime(currTime);
@@ -104,10 +108,11 @@ public class AppointmentService {
         List<AppointmentDto> res = new ArrayList<>();
 
         LocalDateTime currTime = addAppointmentRangeDto.getFrom();
-        AppointmentEntity appointmentEntity = new AppointmentEntity();
-        appointmentEntity.setDoctorId(userEntity.getId());
+        AppointmentEntity appointmentEntity;
         while (currTime.isBefore(addAppointmentRangeDto.getTo())){
             for(int i = 12; i<18; i++){
+                appointmentEntity = new AppointmentEntity();
+                appointmentEntity.setDoctorId(addAppointmentRangeDto.getDoctorId());
                 currTime = currTime.withHour(i).withMinute(0);
                 System.out.println(currTime);
                 appointmentEntity.setDateTime(currTime);
@@ -116,5 +121,18 @@ public class AppointmentService {
             currTime = currTime.plusDays(1);
         }
         return res;
+    }
+
+    public List<AppointmentDto> getAll(Integer page, Integer size) {
+
+        List<AppointmentDto> appointments;
+        appointments = StreamSupport.stream(appointmentRepository.findAll(
+                PageRequest.of(page != null ? page : 0,
+                        size != null ? size : 10,
+                        Sort.by("dateTime").ascending())).spliterator(), false)
+                .map(appointmentMapper::toDto)
+                .collect(Collectors.toList());
+
+        return appointments;
     }
 }
