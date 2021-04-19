@@ -84,6 +84,10 @@ public class UserService implements UserDetailsService {
         throw new BadHttpRequest();
     }
 
+    public UserEntity getDoctorById(long id){
+        return userRepository.findById(id).get();
+    }
+
     public UserDto getUser(Long id) throws NotFoundException {
         Optional<UserDto> user = userRepository.findById(id).map(userMapper::toDto);
         return user.orElseThrow(() -> new NotFoundException(String.format("User not found with id %s",id)));
