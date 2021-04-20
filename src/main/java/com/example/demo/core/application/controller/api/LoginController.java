@@ -60,7 +60,7 @@ public class LoginController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto signUp(@RequestBody AddUserDto userDto) throws UserService.WrongHospitalCodeException {
-        System.out.println(userDto.toString());
+
         return userService.addUser(userDto);
     }
 

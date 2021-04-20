@@ -129,10 +129,10 @@ public class AppointmentService {
         return res;
     }
 
-    public List<AppointmentDto> getAll(Integer page, Integer size) {
+    public List<AppointmentDto> getPagedWithDoctorId(long doctorId, Integer page, Integer size) {
 
         List<AppointmentDto> appointments;
-        appointments = StreamSupport.stream(appointmentRepository.findAll(
+        appointments = StreamSupport.stream(appointmentRepository.findByDoctorId(doctorId,
                 PageRequest.of(page != null ? page : 0,
                         size != null ? size : 10,
                         Sort.by("dateTime").ascending())).spliterator(), false)

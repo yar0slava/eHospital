@@ -1,6 +1,7 @@
 package com.example.demo.core.database.repository;
 
 import com.example.demo.core.database.entity.AppointmentEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,8 @@ public interface AppointmentRepository extends JpaRepository<AppointmentEntity,L
 
     AppointmentEntity findById(long i);
     List<AppointmentEntity> findByPatientId(long patientId);
+
+    List<AppointmentEntity> findByDoctorId(long doctorId, Pageable pageable);
 
     List<AppointmentEntity> findByDoctorId(long doctorId);
 
