@@ -32,7 +32,7 @@ public class AppointmentController {
 
     //  patient makes an appointment for existing DateTime
     // should pass AppointmentDto with id, patient id, (datetime), (doctor id)
-
+    @PreAuthorize("hasAuthority('patient')")
     @PutMapping(value = "/signup")
     @ResponseStatus(HttpStatus.OK)
     public AppointmentDto addAppointment(@RequestParam(name = "meeting", required = true) long meeting){
@@ -66,27 +66,29 @@ return null;
 
     // doctor adds free DateTime for appointments from date 1 to date 2
     // should pass doctor id, dateTime and dateTime
-//    @PostMapping("/add")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<AppointmentDto> addFreeAppointment(@RequestBody AddAppointmentRangeDto addAppointmentRangeDto){
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        final User authenticatedUser = (User) auth.getPrincipal();
-//
-//        return appointmentService.addFreeAppointment(addAppointmentRangeDto, authenticatedUser);
-//    }
-
-    // doctor adds free DateTime for appointments from date 1 to date 2
-    // should pass doctor id, dateTime and dateTime
+    @PreAuthorize("hasAuthority('doctor')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentDto> addFreeAppointment(@RequestBody AddAppointmentRangeDto addAppointmentRangeDto){
-        System.out.println("=============================");
-        System.out.println(addAppointmentRangeDto.getDoctorId());
-        System.out.println(addAppointmentRangeDto.getFrom());
-        System.out.println(addAppointmentRangeDto.getTo());
-        return appointmentService.addFreeAppointment(addAppointmentRangeDto);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final User authenticatedUser = (User) auth.getPrincipal();
+
+        return appointmentService.addFreeAppointment(addAppointmentRangeDto, authenticatedUser);
     }
 
+    // doctor adds free DateTime for appointments from date 1 to date 2
+    // should pass doctor id, dateTime and dateTime
+//    @PostMapping("/add")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<AppointmentDto> addFreeAppointment(@RequestBody AddAppointmentRangeDto addAppointmentRangeDto){
+//        System.out.println("=============================");
+//        System.out.println(addAppointmentRangeDto.getDoctorId());
+//        System.out.println(addAppointmentRangeDto.getFrom());
+//        System.out.println(addAppointmentRangeDto.getTo());
+//        return appointmentService.addFreeAppointment(addAppointmentRangeDto);
+//    }
+
+    @PreAuthorize("hasAuthority('patient')")
     @GetMapping("/patient/{patientId}")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentDto> findByPatientId(@PathVariable("patientId") long patientId){
