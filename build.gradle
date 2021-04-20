@@ -19,7 +19,10 @@ dependencies {
 	compile group: 'org.modelmapper.extensions', name: 'modelmapper-spring', version: '1.1.0'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.2.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.2.RELEASE'
-	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+	compile group: 'io.jsonwebtoken', name: 'jjwt-jackson', version:'0.11.2'
+	compile group: 'io.jsonwebtoken', name: 'jjwt-api', version:'0.11.2'
+	compile group: 'io.jsonwebtoken', name: 'jjwt-impl', version:'0.11.2'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
