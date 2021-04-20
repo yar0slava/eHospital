@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/appointments?page=0&size=10",
+        url: "/appointments?page=0&size=10",
         dataType: "json",
         success: function (json) {
             console.log(json);
