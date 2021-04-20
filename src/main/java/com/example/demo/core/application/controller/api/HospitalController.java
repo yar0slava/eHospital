@@ -1,9 +1,12 @@
 package com.example.demo.core.application.controller.api;
 
+import com.example.demo.core.application.dto.AddHospitalDto;
+import com.example.demo.core.application.dto.HospitalDto;
 import com.example.demo.core.database.entity.HospitalEntity;
 import com.example.demo.core.database.entity.UserEntity;
 import com.example.demo.core.domain.service.HospitalService;
 import com.example.demo.core.domain.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class HospitalController {
@@ -27,6 +31,28 @@ public class HospitalController {
         List<HospitalEntity> hospitals = hospitalService.getAllHospitals();
         model.addAttribute("hospitals", hospitals);
         return "main";
+    }
+
+    @RequestMapping(value = "/hospital/add", method = RequestMethod.GET)
+    public String getHospitalAdd(Model model) {
+        List<HospitalEntity> hospitals = hospitalService.getAllHospitals();
+        Set<String> allTowns = hospitalService.getUniqueTowns(hospitals);
+        Set<String> allRgions = hospitalService.getUniqueRgions(hospitals);
+
+        model.addAttribute("towns", allTowns);
+        model.addAttribute("regions", allRgions);
+        return "addHospital";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/hospital/add", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public HospitalDto signUp(@RequestBody AddHospitalDto hospitalDto) {
+        System.out.println(hospitalDto.getName());
+        System.out.println(hospitalDto.getRegion());
+        System.out.println(hospitalDto.getRegion());
+        return hospitalService.addHospital(hospitalDto);
+      //  return userService.addUser(userDto);
     }
 
     @RequestMapping(value = "/hospital/{id}", method = RequestMethod.GET)
