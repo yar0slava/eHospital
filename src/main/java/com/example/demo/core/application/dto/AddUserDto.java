@@ -1,8 +1,6 @@
 package com.example.demo.core.application.dto;
 
-import com.example.demo.core.database.entity.Authority;
 import com.example.demo.core.database.entity.Gender;
-import com.example.demo.core.database.entity.Specialization;
 import lombok.Getter;
 import lombok.Setter;
 
