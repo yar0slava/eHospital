@@ -9,7 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -37,10 +39,13 @@ public class AppointmentController {
         System.out.println("======================");
         System.out.println(meeting);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        final User authenticatedUser = (User) auth.getPrincipal();
-
-        System.out.println(authenticatedUser.getId());
-        return appointmentService.addAppointment(meeting, authenticatedUser.getId());
+        System.out.println("AUTH");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(name);
+       // final User authenticatedUser = (User) auth.getPrincipal();
+return null;
+        //System.out.println(authenticatedUser.getId());
+        //return appointmentService.addAppointment(meeting, authenticatedUser.getId());
     }
 
     // patient cancels an appointment

@@ -85,6 +85,7 @@ public class UserService implements UserDetailsService {
     }
 
     public UserEntity getDoctorById(long id){
+
         return userRepository.findById(id).get();
     }
 
