@@ -1,6 +1,6 @@
 package com.example.demo.core.application.controller.api;
 
-import com.example.demo.config.util.JwtUtil;
+import com.example.demo.config.JwtTokenGenerator;
 import com.example.demo.core.application.dto.AddUserDto;
 import com.example.demo.core.application.dto.LoginRequestDto;
 import com.example.demo.core.application.dto.LoginResponseDto;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
+    private final JwtTokenGenerator jwtUtil;
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
-    public LoginController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserDetailsService userDetailsService, UserService userService) {
+    public LoginController(AuthenticationManager authenticationManager, JwtTokenGenerator jwtUtil, UserDetailsService userDetailsService, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
