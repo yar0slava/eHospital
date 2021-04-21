@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class User implements UserDetails {
     private long id;
     private String passport;
     private Gender gender;
+    private Date birthday;
     private String firstName;
     private String lastName;
     private String email;
