@@ -19,10 +19,10 @@ import java.util.Set;
 public class User implements UserDetails {
 
     private long id;
+    private String passport;
     private Gender gender;
     private String firstName;
     private String lastName;
-    private Integer age;
     private String email;
     private Hospital hospital;
     private List<Specialization> specializations;

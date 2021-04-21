@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppointmentDto {
+public class AppointmentWithNameDto {
 
     private long id;
 
@@ -23,4 +23,6 @@ public class AppointmentDto {
 
     @NotNull
     private Long doctorId;
+
+    private String name;
 }

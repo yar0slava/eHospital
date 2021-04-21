@@ -34,6 +34,12 @@ public class UserController {
 //        return userService.getAll(page, size);
 //    }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto getUser(@PathVariable("id") Long userId) throws NotFoundException {
+        return userService.getUser(userId);
+    }
+
     @PreAuthorize("hasAnyAuthority('patient','doctor')")
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
@@ -42,12 +48,6 @@ public class UserController {
         final User authenticatedUser = (User) auth.getPrincipal();
 
         return userService.getUser(authenticatedUser.getId());
-    }
-
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public UserDto getUser(@PathVariable("id") Long userId) throws NotFoundException {
-        return userService.getUser(userId);
     }
 
     @PutMapping

@@ -31,7 +31,7 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity,Lo
     Optional<UserEntity> findById(long i);
 
 
-    List<UserEntity> findBySpecializationContains(Specialization specialization);
+    List<UserEntity> findBySpecializationsContains(Specialization specialization);
 
     @Query("SELECT b FROM UserEntity b WHERE b.hospital.town LIKE %:town% ")
     List<UserEntity> findAllWhereTownLike(@Param("town") String town);

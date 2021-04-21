@@ -2,7 +2,7 @@ package com.example.demo.core.application.controller.api;
 
 import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
-import com.example.demo.core.application.dto.UserDto;
+import com.example.demo.core.application.dto.AppointmentWithNameDto;
 import com.example.demo.core.domain.model.User;
 import com.example.demo.core.domain.service.AppointmentService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,10 +15,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.security.Security;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin()
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
@@ -50,6 +50,7 @@ return null;
 
     // patient cancels an appointment
     // should pass AppointmentDto with id, null intead of patient id, (datetime), (doctor id)
+    @PreAuthorize("hasAuthority('patient')")
     @PutMapping(value = "/cancel")
     @ResponseStatus(HttpStatus.OK)
     public AppointmentDto cancelAppointment(@RequestBody AppointmentDto appointmentDto){
@@ -58,7 +59,8 @@ return null;
 
     // doctor deletes free DateTime for appointment
     // should pass id
-    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('doctor')")
+    @DeleteMapping(value = "/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteFreeAppointment(@PathVariable("id") Long id){
         appointmentService.deleteFreeAppointment(id);
@@ -89,22 +91,35 @@ return null;
 //    }
 
     @PreAuthorize("hasAuthority('patient')")
-    @GetMapping("/patient/{patientId}")
+    @GetMapping("/patient")
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentDto> findByPatientId(@PathVariable("patientId") long patientId){
-        return appointmentService.findByPatientId(patientId);
+    public List<AppointmentWithNameDto> findByPatientId(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final User authenticatedUser = (User) auth.getPrincipal();
+
+        return appointmentService.findByPatientId(authenticatedUser.getId());
     }
 
+    @PreAuthorize("hasAuthority('doctor')")
     @GetMapping("/doctor/{doctorId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentDto> findByDoctorId(@PathVariable("doctorId") long doctorId){
-        List<AppointmentDto> res = appointmentService.findByDoctorId(doctorId);
-        for (AppointmentDto a: res) {
-            System.out.println(a.toString());
-        }
-        return res;
+    public List<AppointmentWithNameDto> getPagedForPatient(@PathVariable("doctorId") long doctorId,
+                                                   @RequestParam(value = "page") Integer page,
+                                                   @RequestParam(value = "size") Integer size){
+        return appointmentService.getPagedWithDoctorId(doctorId,page,size);
     }
 
+//    @PreAuthorize("hasAuthority('doctor')")
+//    @GetMapping("/free")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<AppointmentDto> findFreeForDoctorAndDay(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date){
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        final User authenticatedUser = (User) auth.getPrincipal();
+//
+//        return appointmentService.findDoctorsFreeAndDate(authenticatedUser.getId(), date);
+//    }
+
+//    @PreAuthorize("hasAuthority('patient')")
     @GetMapping("/free")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentDto> findFreeForDoctorAndDay(@RequestParam("doctorId") long doctorId,
@@ -112,10 +127,14 @@ return null;
         return appointmentService.findDoctorsFreeAndDate(doctorId, date);
     }
 
+    @PreAuthorize("hasAuthority('doctor')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentDto> getPaged(@RequestParam(value = "page") Integer page,
-                                   @RequestParam(value = "size") Integer size) {
-        return appointmentService.getAll(page, size);
+    public List<AppointmentWithNameDto> getPagedForDoctor(@RequestParam(value = "page") Integer page,
+                                                          @RequestParam(value = "size") Integer size) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final User authenticatedUser = (User) auth.getPrincipal();
+
+        return appointmentService.getPagedWithDoctorId(authenticatedUser.getId(),page, size);
     }
 }

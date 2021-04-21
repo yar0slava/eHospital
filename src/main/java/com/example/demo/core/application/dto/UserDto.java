@@ -2,11 +2,13 @@ package com.example.demo.core.application.dto;
 
 import com.example.demo.core.database.entity.Authority;
 import com.example.demo.core.database.entity.Gender;
+import com.example.demo.core.database.entity.Specialization;
 import com.example.demo.core.domain.model.Hospital;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -15,6 +17,9 @@ public class UserDto {
 
     @NotNull
     private long id;
+
+    @NotNull
+    private String passport;
 
     @NotNull
     private Gender gender;
@@ -31,6 +36,8 @@ public class UserDto {
 
     @NotNull
     private Set<Authority> authority;
+
+    private List<Specialization> specializations;
 
     @NotNull
     private Hospital hospital;
