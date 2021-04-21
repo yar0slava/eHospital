@@ -3,16 +3,20 @@ package com.example.demo.core.application.controller.api;
 import com.example.demo.core.application.dto.PageDto;
 import com.example.demo.core.application.dto.UserDto;
 import com.example.demo.core.database.entity.Specialization;
+import com.example.demo.core.domain.model.User;
 import com.example.demo.core.domain.service.UserService;
 import javassist.NotFoundException;
 import javassist.tools.web.BadHttpRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -23,11 +27,21 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+//    @GetMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    public PageDto<UserDto> getAll(@RequestParam(value = "page", required = false) Integer page,
+//                                   @RequestParam(value = "size", required = false) Integer size) {
+//        return userService.getAll(page, size);
+//    }
+
+    @PreAuthorize("hasAnyAuthority('patient','doctor')")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public PageDto<UserDto> getAll(@RequestParam(value = "page", required = false) Integer page,
-                                   @RequestParam(value = "size", required = false) Integer size) {
-        return userService.getAll(page, size);
+    public UserDto getAuthenticatedUser() throws NotFoundException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final User authenticatedUser = (User) auth.getPrincipal();
+
+        return userService.getUser(authenticatedUser.getId());
     }
 
     @GetMapping("/{id}")
