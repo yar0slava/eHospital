@@ -9,7 +9,23 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div th:replace="navbar.html"></div>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/main">EHospital</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li id="hosp"><a href="/main">Hospitals</a></li>
+            <li id="sp"><a href="/doctors">Specialists</a></li>
+            <li id="prof"><a href="/profile">My Profile</a></li>
+            <li id="ahosp"><a href="/hospital/add">Add Hospital</a></li>
+            <li id="signin"><a class="nav-link" href="/login">Sign In</a></li>
+            <li id="signup" ><a class="nav-link" href="/signup">Sign Up</a></li>
+            <li id="logout"><a class="nav-link" href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
 
 <div class="col-md-12">
     <form>
@@ -84,7 +100,7 @@
                                                 <p> <span th:text="${doctor.getLastName()}"></span>  <span th:text="${doctor.getFirstName()}"></span></p>
                                                 <div style="padding-bottom: 5px">
                                                     <div style="width:330px;display: inline-block; text-align: center">
-                                                        <div th:each="sp : ${doctor.getSpecialization()}" style="display: inline; padding-right: 10px;">
+                                                        <div th:each="sp : ${doctor.getSpecializations()}" style="display: inline; padding-right: 10px;">
                                                             <span  th:text="${sp.getName()}">, </span>
                                                         </div>
                                                         <p> <span th:text="${doctor.getHospital().getTown()}"></span>, <span th:text="${doctor.getHospital().getRegion()}"></span></p>
@@ -167,7 +183,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <script src="/js/specialists.js"></script>
-
+<script src="/js/main.js"></script>
 
 </body>
 </html>

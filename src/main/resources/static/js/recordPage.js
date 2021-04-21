@@ -13,10 +13,12 @@ $(document).ready(function () {
                 console.log(xhr);
             },
             success: function (response) {
-                console.log(response);
+                alert("Your meeting is created successfully!")
+                window.location = '/profile';
             },
 
             error: function (response) {
+                window.location = "/login";
                 console.log(response);
             }
         })
