@@ -32,20 +32,13 @@ function sendRegistration() {
         },
         success: function (response, status, xhr) {
             console.log(response);
-            // window.location = '/login';
+             window.location = '/login';
 
-            // if(response.status == 400){
-            //     alert(xhr.responseJSON.message);
-            // }
         },
         error: function (response, status, xhr) {
 
-            console.log("error");
-            alert(xhr.responseJSON.message);
-
-
-            if (response.message == "Wrong hospital code."){
-                alert(response.message);
+            if (response.responseJSON.message === "Wrong hospital code."){
+                alert(response.responseJSON.message);
             }else {
                 alert("Account with this email already exists");
             }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Messenger - Home</title>
@@ -9,6 +9,22 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+<!--<div th:replace="navbar.html"></div>-->
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/main">EHospital</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+
+        </ul>
+    </div>
+</nav>
+
+<div id="tim"></div>
 
 <div class="col-md-12">
     <form>
