@@ -32,7 +32,7 @@ function sendRegistration() {
         },
         success: function (response, status, xhr) {
             console.log(response);
-            // window.location = '/login';
+             window.location = '/login';
 
         },
         error: function (response, status, xhr) {
