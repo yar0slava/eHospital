@@ -1,15 +1,20 @@
 package com.example.demo.core.application.controller.api;
 
+import com.example.demo.core.database.entity.Authority;
 import com.example.demo.core.database.entity.HospitalEntity;
 import com.example.demo.core.database.entity.Specialization;
 import com.example.demo.core.database.entity.UserEntity;
+import com.example.demo.core.domain.model.User;
 import com.example.demo.core.domain.service.HospitalService;
 import com.example.demo.core.domain.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -54,9 +59,19 @@ public class SpecialistsController {
         return ResponseEntity.ok().body(userService.findDoctorsBySpecializationTownRegion(search));
     }
 
-    @GetMapping("/doctor")
-    public String searchHospitalInput() {
+    //    @PreAuthorize("hasAnyAuthority('patient','doctor')")
+    @GetMapping("/profile")
+    public String searchHospitalInput(Model model) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println("AUTH");
+//        final User authenticatedUser = (User) auth.getPrincipal();
+//        UserEntity userEntity = userService.getDoctorById(authenticatedUser.getId());
+//
+//        ArrayList<Authority> authorities = new ArrayList<>(authenticatedUser.getAuthority());
+//
+//        if(authorities.get(0).getName()=="patient"){
+//            return "patientPage";
+//        }
         return "doctorPage";
     }
-
 }

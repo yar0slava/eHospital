@@ -64,10 +64,29 @@ public class AppointmentService {
         return appointmentMapper.toDto(saved);
     }
 
-    public List<AppointmentDto> findByPatientId(long patientId){
-        return StreamSupport.stream(appointmentRepository.findByPatientId(patientId).spliterator(), false)
+    public List<AppointmentWithNameDto> findByPatientId(long patientId){
+
+        List<AppointmentWithNameDto> res = new ArrayList<>();
+
+        List<AppointmentDto> appointments = StreamSupport.stream(appointmentRepository.findByPatientId(patientId).spliterator(), false)
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
+
+        AppointmentWithNameDto app;
+        for (AppointmentDto a: appointments) {
+            app = new AppointmentWithNameDto();
+            app.setId(a.getId());
+            app.setPatientId(a.getPatientId());
+            app.setDateTime(a.getDateTime());
+            if(a.getDoctorId() != null){
+                UserEntity u = userRepository.findById(a.getDoctorId()).get();
+                app.setDoctorId(a.getDoctorId());
+                app.setName(u.getFirstName()+" "+u.getLastName());
+            }
+            res.add(app);
+        }
+
+        return res;
     }
 
     public List<AppointmentDto> findByDoctorId(long doctorId){

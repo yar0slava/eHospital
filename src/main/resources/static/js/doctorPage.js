@@ -44,7 +44,7 @@ $(document).ready(function () {
         let fd = new Date(finish).toISOString().substring(0, 19);
 
         let u = {
-            doctorId: 1245,
+            // doctorId: 1245,
             from: bd,
             to: fd
         }
@@ -55,6 +55,7 @@ $(document).ready(function () {
             data: JSON.stringify(u),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Content-Type', 'application/json')
+                xhr.setRequestHeader('Authorization', localStorage.getItem("token"))
             },
             success: function (response) {
                 console.log(response);

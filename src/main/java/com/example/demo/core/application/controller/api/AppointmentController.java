@@ -88,7 +88,7 @@ public class AppointmentController {
     @PreAuthorize("hasAuthority('patient')")
     @GetMapping("/patient")
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentDto> findByPatientId(){
+    public List<AppointmentWithNameDto> findByPatientId(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         final User authenticatedUser = (User) auth.getPrincipal();
 
@@ -114,7 +114,7 @@ public class AppointmentController {
 //        return appointmentService.findDoctorsFreeAndDate(authenticatedUser.getId(), date);
 //    }
 
-    @PreAuthorize("hasAuthority('patient')")
+//    @PreAuthorize("hasAuthority('patient')")
     @GetMapping("/free")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentDto> findFreeForDoctorAndDay(@RequestParam("doctorId") long doctorId,
