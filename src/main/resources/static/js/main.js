@@ -114,7 +114,7 @@ function searchResults(res){
                                         "<div style='padding-bottom: 5px'>"+
                                             "<div style='width:160px;display: inline-block;'>"+
                                                 "<p><span>"+res[i].town+"</span>, <span>"+res[i].region+"</span></p>"+
-                                                 "<p><span>"+res[i].users.length+"</span> specialists</p>"+
+                                                 "<p><span></span></p>"+
                                             "</div>"+
                                             "<div style='width:20px; display: inline-block;'></div>"+
                                             "<div style='width: 120px; display: inline-block;'>"+

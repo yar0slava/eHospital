@@ -40,7 +40,7 @@ public class UserController {
         return userService.getUser(userId);
     }
 
-    @PreAuthorize("hasAnyAuthority('patient','doctor')")
+    @PreAuthorize("hasAnyAuthority('patient','doctor','admin')")
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public UserDto getAuthenticatedUser() throws NotFoundException {
