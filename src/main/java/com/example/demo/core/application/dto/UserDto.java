@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,9 @@ public class UserDto {
 
     @NotEmpty
     private String lastName;
+
+    @NotNull
+    private Date birthday;
 
     @Email
     @Pattern(regexp = "@gmail.com$")

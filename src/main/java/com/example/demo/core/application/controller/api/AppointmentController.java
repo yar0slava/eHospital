@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@CrossOrigin()
+@CrossOrigin
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
@@ -85,6 +85,7 @@ public class AppointmentController {
 //        return appointmentService.addFreeAppointment(addAppointmentRangeDto);
 //    }
 
+    @CrossOrigin
     @PreAuthorize("hasAuthority('patient')")
     @GetMapping("/patient")
     @ResponseStatus(HttpStatus.OK)

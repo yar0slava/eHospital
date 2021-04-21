@@ -76,7 +76,7 @@ public class AppointmentService {
         for (AppointmentDto a: appointments) {
             app = new AppointmentWithNameDto();
             app.setId(a.getId());
-            app.setPatientId(a.getPatientId());
+            app.setPatientId(patientId);
             app.setDateTime(a.getDateTime());
             if(a.getDoctorId() != null){
                 UserEntity u = userRepository.findById(a.getDoctorId()).get();
