@@ -53,7 +53,7 @@ public class UserEntity {
     private Set<Authority> authority;
 
    // @JsonIgnoreProperties("users")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hospital_id")
     private HospitalEntity hospital;
 
@@ -64,5 +64,5 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
    // @JsonIgnore
-    private Set<Specialization> specialization;
+    private Set<Specialization> specializations;
 }

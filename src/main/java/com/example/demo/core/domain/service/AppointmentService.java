@@ -2,6 +2,7 @@ package com.example.demo.core.domain.service;
 
 import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
+import com.example.demo.core.application.dto.AppointmentWithNameDto;
 import com.example.demo.core.database.entity.AppointmentEntity;
 import com.example.demo.core.database.entity.UserEntity;
 import com.example.demo.core.database.repository.AppointmentRepository;
@@ -63,10 +64,29 @@ public class AppointmentService {
         return appointmentMapper.toDto(saved);
     }
 
-    public List<AppointmentDto> findByPatientId(long patientId){
-        return StreamSupport.stream(appointmentRepository.findByPatientId(patientId).spliterator(), false)
+    public List<AppointmentWithNameDto> findByPatientId(long patientId){
+
+        List<AppointmentWithNameDto> res = new ArrayList<>();
+
+        List<AppointmentDto> appointments = StreamSupport.stream(appointmentRepository.findByPatientId(patientId).spliterator(), false)
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
+
+        AppointmentWithNameDto app;
+        for (AppointmentDto a: appointments) {
+            app = new AppointmentWithNameDto();
+            app.setId(a.getId());
+            app.setPatientId(a.getPatientId());
+            app.setDateTime(a.getDateTime());
+            if(a.getDoctorId() != null){
+                UserEntity u = userRepository.findById(a.getDoctorId()).get();
+                app.setDoctorId(a.getDoctorId());
+                app.setName(u.getFirstName()+" "+u.getLastName());
+            }
+            res.add(app);
+        }
+
+        return res;
     }
 
     public List<AppointmentDto> findByDoctorId(long doctorId){
@@ -129,16 +149,31 @@ public class AppointmentService {
         return res;
     }
 
-    public List<AppointmentDto> getAll(Integer page, Integer size) {
+    public List<AppointmentWithNameDto> getPagedWithDoctorId(long doctorId, Integer page, Integer size) {
 
-        List<AppointmentDto> appointments;
-        appointments = StreamSupport.stream(appointmentRepository.findAll(
+        List<AppointmentWithNameDto> res = new ArrayList<>();
+
+        List<AppointmentDto> appointments = StreamSupport.stream(appointmentRepository.findByDoctorId(doctorId,
                 PageRequest.of(page != null ? page : 0,
                         size != null ? size : 10,
                         Sort.by("dateTime").ascending())).spliterator(), false)
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
 
-        return appointments;
+        AppointmentWithNameDto app;
+        for (AppointmentDto a: appointments) {
+            app = new AppointmentWithNameDto();
+            app.setId(a.getId());
+            app.setDoctorId(a.getDoctorId());
+            app.setDateTime(a.getDateTime());
+            if(a.getPatientId() != null){
+                UserEntity u = userRepository.findById(a.getPatientId()).get();
+                app.setPatientId(a.getPatientId());
+                app.setName(u.getFirstName()+" "+u.getLastName());
+            }
+            res.add(app);
+        }
+
+        return res;
     }
 }
