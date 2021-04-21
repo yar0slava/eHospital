@@ -8,8 +8,9 @@ $(document).ready(function () {
             type: 'PUT',
             url: "/appointments/signup?meeting="+mt,
             beforeSend: function (xhr) {
-                xhr.setRequestHeader('Content-Type', 'application/json'),
-                    xhr.setRequestHeader('Authorization', localStorage.getItem("token"))
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader(localStorage.getItem("token"))
+                console.log(xhr);
             },
             success: function (response) {
                 console.log(response);

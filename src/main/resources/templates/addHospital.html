@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EHospital</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<br/>
+<br/>
+<br/>
+<div class="container text-center">
+    <h2> Заповніть наступні поля, для того аби додати нову лікарню</h2>
+</div>
+<br/>
+
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+
+        <div class="form-outline mb-4">
+            <label class="form-label">Назва лікарні</label>
+            <input type="text" id="nam" class="form-control" />
+
+        </div>
+
+        <br/>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" >Населений пункт</label>
+            <input id="town" class="form-control" list="townlist">
+            <datalist id="townlist">
+                <option th:each="town : ${towns}"
+                        th:value="${town}"
+                        th:text="${town}"></option>
+            </datalist>
+        </div>
+
+        <br/>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" >Район</label>
+            <input id="rgion" class="form-control" list="rgionlist">
+            <datalist id="rgionlist">
+                <option th:each="region : ${regions}"
+                        th:value="${region}"
+                        th:text="${region}"></option>
+            </datalist>
+        </div>
+<br/>
+        <!-- Submit button -->
+        <button name="aHospital" id="aHospital"  class=" mt-2 btn btn-primary btn-block mb-4">SEND</button>
+
+
+        <br/>
+        <br/>
+        <div id="ohospital"></div>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script src="/js/addHospital.js"></script>
+</body>
+</html>
