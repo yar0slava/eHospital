@@ -2,6 +2,7 @@ package com.example.demo.core.domain.service;
 
 import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
+import com.example.demo.core.application.dto.AppointmentWithNameDto;
 import com.example.demo.core.database.entity.AppointmentEntity;
 import com.example.demo.core.database.entity.UserEntity;
 import com.example.demo.core.database.repository.AppointmentRepository;
@@ -129,16 +130,31 @@ public class AppointmentService {
         return res;
     }
 
-    public List<AppointmentDto> getPagedWithDoctorId(long doctorId, Integer page, Integer size) {
+    public List<AppointmentWithNameDto> getPagedWithDoctorId(long doctorId, Integer page, Integer size) {
 
-        List<AppointmentDto> appointments;
-        appointments = StreamSupport.stream(appointmentRepository.findByDoctorId(doctorId,
+        List<AppointmentWithNameDto> res = new ArrayList<>();
+
+        List<AppointmentDto> appointments = StreamSupport.stream(appointmentRepository.findByDoctorId(doctorId,
                 PageRequest.of(page != null ? page : 0,
                         size != null ? size : 10,
                         Sort.by("dateTime").ascending())).spliterator(), false)
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
 
-        return appointments;
+        AppointmentWithNameDto app;
+        for (AppointmentDto a: appointments) {
+            app = new AppointmentWithNameDto();
+            app.setId(a.getId());
+            app.setDoctorId(a.getDoctorId());
+            app.setDateTime(a.getDateTime());
+            if(a.getPatientId() != null){
+                UserEntity u = userRepository.findById(a.getPatientId()).get();
+                app.setPatientId(a.getPatientId());
+                app.setName(u.getFirstName()+" "+u.getLastName());
+            }
+            res.add(app);
+        }
+
+        return res;
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.core.application.controller.api;
 
 import com.example.demo.core.application.dto.AddAppointmentRangeDto;
 import com.example.demo.core.application.dto.AppointmentDto;
+import com.example.demo.core.application.dto.AppointmentWithNameDto;
 import com.example.demo.core.domain.model.User;
 import com.example.demo.core.domain.service.AppointmentService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin()
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
@@ -96,7 +98,7 @@ public class AppointmentController {
     @PreAuthorize("hasAuthority('doctor')")
     @GetMapping("/doctor/{doctorId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentDto> getPagedForPatient(@PathVariable("doctorId") long doctorId,
+    public List<AppointmentWithNameDto> getPagedForPatient(@PathVariable("doctorId") long doctorId,
                                                    @RequestParam(value = "page") Integer page,
                                                    @RequestParam(value = "size") Integer size){
         return appointmentService.getPagedWithDoctorId(doctorId,page,size);
@@ -123,8 +125,8 @@ public class AppointmentController {
     @PreAuthorize("hasAuthority('doctor')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentDto> getPagedForDoctor(@RequestParam(value = "page") Integer page,
-                                   @RequestParam(value = "size") Integer size) {
+    public List<AppointmentWithNameDto> getPagedForDoctor(@RequestParam(value = "page") Integer page,
+                                                          @RequestParam(value = "size") Integer size) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         final User authenticatedUser = (User) auth.getPrincipal();
 

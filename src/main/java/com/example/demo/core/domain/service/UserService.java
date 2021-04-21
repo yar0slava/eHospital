@@ -114,7 +114,7 @@ public class UserService implements UserDetailsService {
             specializations.add(specializationRepository.findByNameEquals(s).get());
         }
 
-        userEntity.setSpecialization(specializations);
+        userEntity.setSpecializations(specializations);
 
         if(user.getHospitalCode() != ""){
             Optional<HospitalEntity> hospitalEntity = hospitalRepository.findByCodeHospital(user.getHospitalCode());
@@ -175,7 +175,7 @@ public class UserService implements UserDetailsService {
         Set<Specialization> specializations = new HashSet<>();
 
         for(int i=0; i< userEntities.size();i++){
-            Set<Specialization> sp = userEntities.get(i).getSpecialization();
+            Set<Specialization> sp = userEntities.get(i).getSpecializations();
 
             for (Iterator<Specialization> it = sp.iterator(); it.hasNext(); ) {
                 Specialization f = it.next();
@@ -208,7 +208,7 @@ public class UserService implements UserDetailsService {
 
         for(int i=0; i<spialization.size();i++){
             Optional<Specialization> specialization = specializationRepository.findSpecializationByName(spialization.get(i).toLowerCase());
-            List<UserEntity> userEntities = userRepository.findBySpecializationContains(specialization.get());
+            List<UserEntity> userEntities = userRepository.findBySpecializationsContains(specialization.get());
             for(int j=0; j<userEntities.size();j++){
                 rsult.add(userEntities.get(j));
             }
@@ -276,7 +276,7 @@ public class UserService implements UserDetailsService {
         Optional<Specialization> specialization = specializationRepository.findSpecializationByName(search);
         List<UserEntity> userEntitiesBySp = new ArrayList<>();
         if(specialization.isPresent()){
-            userEntitiesBySp = userRepository.findBySpecializationContains(specialization.get());
+            userEntitiesBySp = userRepository.findBySpecializationsContains(specialization.get());
         }
 
         Set<UserEntity> rsult = new HashSet<>(userEntities);

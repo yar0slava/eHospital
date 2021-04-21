@@ -3,6 +3,10 @@ $(document).ready(function () {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/appointments?page=0&size=10",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Content-Type', 'application/json'),
+                xhr.setRequestHeader('Authorization', localStorage.getItem("token"))
+        },
         dataType: "json",
         success: function (json) {
             console.log(json);
@@ -12,11 +16,15 @@ $(document).ready(function () {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/appointments?page=0&size=10",
+        url: "http://localhost:8080/api/users",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Content-Type', 'application/json'),
+                xhr.setRequestHeader('Authorization', localStorage.getItem("token"))
+        },
         dataType: "json",
         success: function (json) {
             console.log(json);
-            createListAppointments(json);
+            addInfo(json);
         }
     });
 
@@ -55,7 +63,7 @@ $(document).ready(function () {
 
             }
         })
-    }
+    };
 
     function createListAppointments(json) {
 
@@ -67,7 +75,7 @@ $(document).ready(function () {
                                 <tr><td id="id">'+object.id+'</td>\
                                 <td id="dateTime">'+object.dateTime.substring(0, 10)+'</td>\
                                 <td id="dateTime">'+object.dateTime.substring(11, 16)+'</td>\
-                                <td id="patient">'+object.patientId+'</td></tr>');
+                                <td id="patient">'+ ((object.name==null) ? "" : object.name) +'</td></tr>');
 
             // $("#appointmentsList").find("#id").last().text(object.id);
             // $("#appointmentsList").find("#dateTime").last().text(object.dateTime);
@@ -76,4 +84,18 @@ $(document).ready(function () {
         });
     };
 
+    function addInfo(object) {
+
+            $("#doctorName").text('Doctor '+object.firstName + " " + object.lastName);
+
+            let spec = "";
+            object.specializations.forEach(function (sp) {
+                spec += sp.name + " ";
+            });
+
+        $("#hospital").text(object.hospital.name);
+            $("#specialization").text(spec);
+            $("#email").text(object.email);
+
+    };
 });
