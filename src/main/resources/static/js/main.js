@@ -6,7 +6,7 @@ document.getElementById("prof").style.display = "none";
 
 $.ajax({
     type: "GET",
-    url: "http://localhost:9090/api/users",
+    url: "http://localhost:8080/api/users",
     beforeSend: function (xhr) {
         xhr.setRequestHeader('Content-Type', 'application/json'),
             xhr.setRequestHeader('Authorization', localStorage.getItem("token"))

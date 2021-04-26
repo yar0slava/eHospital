@@ -138,7 +138,7 @@ public class AppointmentService {
         while (currTime.isBefore(addAppointmentRangeDto.getTo())){
             for(int i = 12; i<18; i++){
                 appointmentEntity = new AppointmentEntity();
-                appointmentEntity.setDoctorId(addAppointmentRangeDto.getDoctorId());
+                appointmentEntity.setDoctorId(userEntity.getId());
                 currTime = currTime.withHour(i).withMinute(0);
                 System.out.println(currTime);
                 appointmentEntity.setDateTime(currTime);
